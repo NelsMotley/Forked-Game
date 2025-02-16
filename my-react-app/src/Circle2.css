@@ -10,6 +10,9 @@ body {
 
 }
 
+
+
+
 .test{
   position: relative;
   z-index: 1;
@@ -48,30 +51,84 @@ body {
   z-index: -2;
 }
 
-
-.content-container {
+.logo-container {
   position: relative;
- 
+  top: 90px;
+  left: 70%;
+  transform: translateX(-50%);
+  display: flex;
   flex-direction: column;
-  align-items: left;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
 }
 
 
+.logo {
+  position: absolute;
+  left : 50%;
+  height: 75px;
+  width: 40%;
+  border: 5px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-image: linear-gradient(120deg, #b8b8b8, #f0f0f0, #8a8a8a, #e0e0e0, #545454) 1;
+  background-size: 200%;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6);
+}
+
 .question-label {
-  top: 5px;
-    position: absolute;
-    font-size: 20px;
-    font-weight: bold;
-    color: #c9bfbf;
+    background: linear-gradient(120deg, #b8b8b8, #f0f0f0, #8a8a8a, #e0e0e0, #545454);
+    background-size: 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 5s linear infinite;
     text-align: center;
-    margin-bottom: 20px;
+    font-family: "Orbitrn", serif;
+    font-optical-sizing: auto;
+    font-weight: 900; /* from 400 to 900, 900 being bold */
+    font-style: normal;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.meter-container {
+  position: absolute;
+  top : 63%;
+  left: 70%;
+}
+
+
+.subtile-wrapper {
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  left: 70%;
+  transform: translateX(-50%) translateY(250%);
+  font-family: "Orbitron", serif;
+  font-weight: 900;
+  font-style: normal;
+  color: #e0e0e0;
+}
+.orbitron-subtitle{
+  
+  position: absolute;
+  top: 100%;
+  left: 70%;
+  transform: translateX(-50%) translateY(250%);
+  font-family: "Orbitron", serif;
+  font-weight: 900;
+  font-style: normal;
+  color: #e0e0e0;
 }
 
 .circle-wrapper {
     position: relative;
     width: 800px;
     height: 800px;
-    transform: translate(-36%, 7%);
+    transform: translate(-31%, 5%);
     margin: 0 auto;
 }
 
@@ -365,8 +422,8 @@ body {
 
 .feedback {
   position: absolute;
-  top: 10%;
-  left: 70%;
+  top: 83%;
+  left: -35%;
   width: 100px;
   height: 100px;
   border: 7px solid black; /* Adjust border thickness/color as needed */

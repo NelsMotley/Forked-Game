@@ -6,6 +6,7 @@ import random
 from flask_cors import CORS
 import threading
 import time
+import string
 
 API_KEY = 'cff7070fc31b4b012bd377ab95984915'
 BASE_URL = 'http://ws.audioscrobbler.com/2.0/'
@@ -257,7 +258,6 @@ def score_range(score, exact):
 
 
 
-
 app = Flask(__name__)
 CORS(app)
 
@@ -330,8 +330,8 @@ def get_review():
                     'option1': option1,
                     'option2': option2,
                     'option3': option3,
-                    'album': correct[1],
-                    'artist': correct[2],
+                    'album': correct[1].upper(),
+                    'artist': string.capwords(correct[2]),
                     'score': correct[3]})
 
 
