@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import './Circle2.css';
+import $ from 'jquery';
+import { Textfit } from 'react-textfit';
+import Meter from './Meter.js';
 import axios from 'axios';
 
 const Circle2 = () => {
@@ -352,11 +355,23 @@ const Circle2 = () => {
     return (
         <div>
             <div className='test'>
+            <div className='logo-container'>
+            <div className='logo'>
+            <Textfit mode="single" forceSingleModeWidth={true} max={60} style={{ width: '90%', height: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <h2 className="question-label"> {data.artist} </h2>
+                </Textfit>
+            </div>
+            <div className='subtitle-wrapper'>
+                <Textfit mode="single" forceSingleModeWidth={true} max={60} style={{ width: '90%', height: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <div className="orbitron-subtitle">{data.album}</div>
+                </Textfit>
+            </div>
+            </div>
            
         
         <div className='content-container'>
         <div className='circle-container'>
-            <h2 className="question-label"> {data.album} by {data.artist} </h2>
+            
             <div className='circle-wrapper'>
             <div className="inner-circle"></div>
             <div className={`circle2 small-circle ${selectedCircle === 'small' ? 'selected' : ''}`} style={{ transform: `translate(-50%, -50%) rotate(${smallCircleRotation + 45}deg)`, transition: `transform ${smallTransitionDuration} ease-in-out`}} onClick={() => handleCircleClick('small')}>
@@ -437,8 +452,11 @@ const Circle2 = () => {
         </div>
             <div className={`feedback ${score === 10 ? 'feedback-active' : ''}`}>
                 {score}
+                
             </div>
-            
+            <div className='meter-container'>
+            <Meter value = {11}/>
+            </div>
             <div className='buttons-container'> 
                 <div className='button-housing'><button className = "play-button" onClick={handleRotateClick}>New <br></br> Puzzle</button></div>    
                 
