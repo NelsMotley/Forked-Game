@@ -455,7 +455,7 @@ const Circle2 = () => {
                 
             </div>
             <div className='meter-container'>
-            <Meter value = {11}/>
+            <Meter value = {lives/4}/>
             </div>
             <div className='buttons-container'> 
                 <div className='button-housing'><button className = "play-button" onClick={handleRotateClick}>New <br></br> Puzzle</button></div>    
@@ -477,7 +477,7 @@ const Circle2 = () => {
                 <h1 style={{height: "50px"}}></h1>
             </div>
             <div className="life-bar-container">
-                 <LifeBar lives={lives} />
+                 
             </div>
             
             

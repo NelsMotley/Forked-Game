@@ -1,9 +1,9 @@
 .meter {
     width: 300px;
-    height: 180px;
+    height: 100px;
     position: relative;
     border-radius: 15px;
-   
+    z-index: 10;
    
     box-sizing: border-box;
 }
@@ -17,21 +17,26 @@
 }
 
 .meter-background {
-    width: 80%;
-    height: 60%;
-    background: linear-gradient(to bottom, #a3b1c6, #dde4ed);
+    width: 90%;
+    height: 80%;
+    background: linear-gradient(to right, #626870, #dde4ed);
     border-radius: 5px;
     border: 2px solid #333;
     box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
     position: absolute;
-    top: 20%;
-    left: 10%;
+    top: 10%;
+    left: 5%;
+    z-index: 1;
+    overflow: hidden;  
 }
 
+
+
 .meter-ticks{
-    position: relative;
+    position: absolute;
+    top: 60%;
     width: 100%;
-    height: 60%;
+    height: 120%;
   
 }
 
@@ -47,29 +52,76 @@
 
 .meter-needle {
     width: 2px;
-    height: 90px;
+    height: 180px;
     background: red;
     position:absolute;
-    bottom: 15%;
+    bottom: -130%;
     left: 50%;
+    z-index: 5;
     transform-origin: bottom center;
     transition: transform 0.3s ease-in-out;
 }
 
+
+.arc {
+    --a: 61deg; /* control the progression */
+    width: 360px;
+    transform: rotate(-30deg);
+    background: #070707;
+    position:absolute;
+    bottom: -375%;
+    left: -16.5%;
+    aspect-ratio: 1;
+    padding: 2px; /* the boder thickness */
+    box-sizing: border-box;
+    border-radius: 50%;
+    mask:
+        linear-gradient(#0000 0 0) content-box intersect,
+        conic-gradient(#000 var(--a),#0000 0);
+  }
+
+
 .meter-label {
     position: absolute;
-    bottom: 10px;
+    bottom: 25px;
     width: 100%;
     text-align: center;
-    font-size: 14px;
-    font-weight: bold;
-    color: #fff;
+    font-family: "Orbitron", serif;
+    font-weight: 600;
+    font-style: normal;
+    color: #181414;
+    z-index: 10;
 }
 
 .metallic {
+    z-index: 10;
     border: 4px solid #888;
     background: linear-gradient(145deg, #444, #bbb);
-    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.6), -2px -2px 5px rgba(255,255,255,0.3);
+    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.6);
 }
 
 
+@keyframes needleWobble {
+    0% {
+      transform: rotate(var(--final-angle));
+    }
+    20% {
+      transform: rotate(calc(var(--final-angle) + 2deg));
+    }
+    40% {
+      transform: rotate(calc(var(--final-angle) - 1deg));
+    }
+    60% {
+      transform: rotate(calc(var(--final-angle) + 1deg));
+    }
+    80% {
+      transform: rotate(calc(var(--final-angle) - 0.5deg));
+    }
+    100% {
+      transform: rotate(var(--final-angle));
+    }
+  }
+  
+  .meter-needle.wobble {
+    animation: needleWobble 0.8s ease-out;
+  }
