@@ -96,8 +96,8 @@ body {
 
 .meter-container {
   position: absolute;
-  top : 63%;
-  left: 70%;
+  top : 73%;
+  left: 71%;
 }
 
 
@@ -498,3 +498,6 @@ body {
 .incorrect-quadrant2:hover .quadrant-text {
   color: rgb(195, 69, 57) !important;
 }
+
+
+
