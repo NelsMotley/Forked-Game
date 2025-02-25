@@ -1,0 +1,156 @@
+.arm-group {
+    position: absolute;
+    width: 150px;    
+    height: 600px;  
+    top: 0;        
+    right: 0;        
+    
+  }
+  
+
+.arm{
+    position: absolute;
+    width: 150px;
+    height: 600px;
+    top: 0;
+    right: 0;
+    transform-origin: 120px 75px;
+    transform: rotate(0deg);
+    transition: transform 1s ease-in-out;
+}
+
+.circle-part{
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background-color: #f00;
+    border-radius: 50%;
+    top: 0%;
+    right: -30%
+}
+
+.rect-part{
+    position: absolute;
+  width: 100px;
+  height: 150px;
+  background: linear-gradient(145deg, #706767, #5a5151);
+  border-radius: 4px; /* adds a slightly softer edge */
+  box-shadow: inset 2px 2px 5px rgba(161, 150, 150, 0.6),  /* lighter inner highlight */
+              inset -2px -2px 5px rgba(0,0,0,0.3);     /* softer inner shadow */
+  top: 5%;
+  left: 46.5%;
+  z-index: 1000;
+  display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  
+}
+
+
+
+.big-shadow{
+    position: absolute;
+    width: 100px;
+    height: 150px;
+    box-shadow: 5px 5px 10px 5px rgba(0,0,0,0.5);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 100%);
+    border-radius: 0%;
+    top: 5%;
+    left: 47%;
+    z-index: 999;
+    opacity: 0.5;
+}
+
+.arm-part{
+    position: absolute;
+    width: 30px;
+    height: 310px;
+    background-color:  rgb(83, 72, 72);
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0%, rgb(83, 72, 72) 50%, rgba(0,0,0,0.8) 100%); 
+    border-radius: 0%;
+    top: 30%;
+    left: 70%;
+    z-index: 2;
+}
+
+.arm-part::after {
+    content: "";
+    position: absolute;
+    bottom: -1px; /* starts at the bottom edge */
+    left: 0;
+    width: 100%;
+    height: 20px; /* height of the fade */
+    background: linear-gradient(to 30deg, rgba(83,72,72,1), rgba(83,72,72,0));
+    pointer-events: none;
+    
+    z-index: 10;
+  }
+
+.rect-shadow{
+    position: absolute;
+    width: 50px;
+    height: 310px;
+    box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.5);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 100%);
+    border-radius: 0%;
+    top: 30%;
+    left: 70%;
+    opacity: 0.5;
+   
+}
+
+.bend-part{
+    position: absolute;
+    width: 30px;
+    height: 300px;
+    background-color:  rgb(83, 72, 72);
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0%, rgb(83, 72, 72) 50%, rgba(0,0,0,0.8) 100%); 
+    border-radius: 0%;
+    top: 80%;
+    left: 44.5%;
+    transform: rotate(15deg);
+    z-index: 1;
+}
+
+.bend-shadow {
+    position: absolute;
+    width: 50px;
+    height: 300px;
+    box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.5);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 100%);
+    border-radius: 0%;
+    top: 79.5%;
+    left: 44.5%;
+    transform: rotate(15deg);
+    z-index: -1;
+    opacity: 0.5;
+}
+
+.head-part{
+    position: absolute;
+  width: 60px;
+  height: 100px;
+  background: linear-gradient(145deg, #1a1a1a, #000);
+  border-radius: 4px; /* optional for a softer edge */
+  box-shadow: inset 2px 2px 5px rgba(255,255,255,0.2), /* light reflection */
+              inset -2px -2px 5px rgba(0,0,0,0.8);   /* darker shadow */
+  transform: rotate(15deg);
+  top: 120%;
+  left: 9%;
+  z-index: 20;
+}
+
+.head-shadow{
+    position: absolute;
+    width: 60px;
+    height: 100px;
+    box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.5);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 100%);
+    border-radius: 0%;
+    top: 120%;
+    left: 15%;
+    transform: rotate(15deg);
+    z-index: -1;
+    opacity: 0.5;
+}
