@@ -3,7 +3,10 @@ import './Circle2.css';
 import $ from 'jquery';
 import { Textfit } from 'react-textfit';
 import Meter from './Meter.js';
+import Slider from './Slilder.js';
+import Arm from './Arm.js';
 import axios from 'axios';
+import ArmPortal from './ArmPortal.js';
 
 const Circle2 = () => {
     const [smallCircleRotation, setSmallCircleRotation] = useState(0);
@@ -30,6 +33,7 @@ const Circle2 = () => {
     const [bigSolved, setBigSolved] = useState(false);
     const [smallSolved, setSmallSolved] = useState(false);
     const [numCorrect, setNumCorrect] = useState(0);
+    const [win, setWin] = useState(0);
 
     const DEFAULT_OFFSET = 45;
 
@@ -37,6 +41,7 @@ const Circle2 = () => {
         if (optionNumber === 1 && lives > 0) {
             if (data.option1 === data.score) {
                 console.log("Correct option 1");
+                setWin(45);
                 setScore(10);
             }
             else {
@@ -46,6 +51,7 @@ const Circle2 = () => {
         else if (optionNumber === 2 && lives > 0) {
             if (data.option2 === data.score) {
                 console.log("Correct option 2");
+                setWin(45);
                 setScore(10);
             }
             else {
@@ -55,6 +61,7 @@ const Circle2 = () => {
         else if (optionNumber === 3 && lives > 0) {
             if (data.option3 === data.score) {
                 console.log("Correct option 3");
+                setWin(45);
                 setScore(10);
             }
             else {
@@ -244,6 +251,7 @@ const Circle2 = () => {
                 setHugeSolved(false);
                 setBigSolved(false);
                 setSmallSolved(false);
+                setWin(0);
             })
             .catch(error => {
                 console.error("Error fetching new puzzle:", error);
@@ -354,6 +362,7 @@ const Circle2 = () => {
 
     return (
         <div>
+            <div className='fake'>
             <div className='test'>
             <div className='logo-container'>
             <div className='logo'>
@@ -367,8 +376,7 @@ const Circle2 = () => {
                 </Textfit>
             </div>
             </div>
-           
-        
+          
         <div className='content-container'>
         <div className='circle-container'>
             
@@ -449,19 +457,22 @@ const Circle2 = () => {
         </div>
 
         
+        
         </div>
             <div className={`feedback ${score === 10 ? 'feedback-active' : ''}`}>
                 {score}
                 
             </div>
             <div className='meter-container'>
+            
             <Meter value = {lives/4}/>
             </div>
             <div className='buttons-container'> 
                 <div className='button-housing'><button className = "play-button" onClick={handleRotateClick}>New <br></br> Puzzle</button></div>    
                 
                 <div className='button-housing'><button className = "play-button"  onClick={checkAnswers}>Check <br></br>Answer</button></div>
-                
+            
+
             {/* New row of option buttons */}
             { (bigSolved && smallSolved && hugeSolved) && (
                 <div className="option-buttons">
@@ -478,11 +489,20 @@ const Circle2 = () => {
             </div>
             <div className="life-bar-container">
                  
+            </div> 
+            </div>
+            <div className='Slider-container'>
+                <Slider value = {win}/>
             </div>
             
-            
-            
+            <ArmPortal>
+                <div className='arm-container'> 
+                    <Arm value = {win}/>
+                </div>
+            </ArmPortal>
+        
         </div>
+
         
         
     );
