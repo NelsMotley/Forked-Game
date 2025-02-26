@@ -34,6 +34,7 @@ const Circle2 = () => {
     const [smallSolved, setSmallSolved] = useState(false);
     const [numCorrect, setNumCorrect] = useState(0);
     const [win, setWin] = useState(0);
+    const [finished, setFinished] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
 
     const DEFAULT_OFFSET = 45;
@@ -48,6 +49,7 @@ const Circle2 = () => {
             if (data.option1 === data.score) {
                 console.log("Correct option 1");
                 setWin(45);
+                setFinished(false);
                 setScore(10);
             }
             else {
@@ -58,6 +60,7 @@ const Circle2 = () => {
             if (data.option2 === data.score) {
                 console.log("Correct option 2");
                 setWin(45);
+                setFinished(false);
                 setScore(10);
             }
             else {
@@ -68,6 +71,7 @@ const Circle2 = () => {
             if (data.option3 === data.score) {
                 console.log("Correct option 3");
                 setWin(45);
+                setFinished(false);
                 setScore(10);
             }
             else {
@@ -257,6 +261,7 @@ const Circle2 = () => {
                 setBigSolved(false);
                 setSmallSolved(false);
                 setWin(0);
+                setFinished(false);
             })
             .catch(error => {
                 console.error("Error fetching new puzzle:", error);
@@ -329,6 +334,7 @@ const Circle2 = () => {
             return;
         }
         if (smallCurrent === smallCircleAnswer && bigCurrent === bigCircleAnswer && hugeCurrent === hugeCircleAnswer && numCorrect <= 3) {
+            setFinished(true);
             setSmallSolved(true);
             setBigSolved(true);
             setHugeSolved(true);
@@ -500,7 +506,7 @@ const Circle2 = () => {
             
             <ArmPortal>
                 <div className='arm-container'> 
-                    <Arm value = {win} data = {data} onSelect={handleSelectedOption} selectedOption={selectedOption}/>
+                    <Arm value = {win} data = {data} onSelect={handleSelectedOption} selectedOption={selectedOption} fin = {finished}/>
                 </div>
                 
             </ArmPortal>

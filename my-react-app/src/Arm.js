@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Arm.css";
 
-const Arm = ({ value, data, lives, onSelect }) => {
+const Arm = ({ value, data, lives, onSelect, fin }) => {
   // Create refs for elements we need to manipulate
   const armShineRef = useRef(null);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -36,10 +36,14 @@ const Arm = ({ value, data, lives, onSelect }) => {
     <div className="arm-group">
       <div className="arm" style={{ transform: `rotate(${value}deg)` }}>
         <div className="circle-part"></div>
-        <div className="rect-part">Select the exact score given.</div>
+        <div className="rect-part">
+          {fin && (<div className="rect-text"></div>)}
+        </div>
         <div className="big-shadow"></div>
         <div className="rect-shadow"></div>
         <div className="arm-part">
+          {fin && (
+            <div className="WHy">
           <button 
             className="questions-button" 
             onClick={() => onSelect(1)}
@@ -62,6 +66,8 @@ const Arm = ({ value, data, lives, onSelect }) => {
             {data.option3}
           </button>
           <div className="arm-shine" ref={armShineRef}></div>
+          </div>
+          )}
         </div>
         <div className="bend-part"></div>
         <div className="bend-shadow"></div>
