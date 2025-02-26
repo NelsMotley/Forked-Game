@@ -84,7 +84,7 @@ body {
 
 .logo {
   position: absolute;
-  left : 50%;
+  left : 45%;
   height: 75px;
   width: 40%;
   border: 5px solid black;
@@ -134,7 +134,7 @@ body {
   
   position: absolute;
   top: 100%;
-  left: 70%;
+  left: 66%;
   transform: translateX(-50%) translateY(250%);
   font-family: "Orbitron", serif;
   font-weight: 900;

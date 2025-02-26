@@ -23,20 +23,54 @@
     position: absolute;
     width: 150px;
     height: 150px;
-    background-color: #f00;
+    background: radial-gradient(circle at 40% 40%, 
+              rgb(90, 90, 90) 0%, 
+              rgb(60, 60, 60) 60%, 
+              rgb(40, 40, 40) 100%);
+    border: 2px solid #333;
     border-radius: 50%;
+    box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 0 10px rgba(0, 0, 0, 0.6),
+    0 5px 15px rgba(0, 0, 0, 0.5);
     top: 0%;
     right: -30%
+}
+
+.circle-part::before{
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  height: 30%;
+  background: #222;
+  border-radius: 50%;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);
+}
+
+.circle-part::after{
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8%;
+  height: 8%;
+  background: #111;
+  border-radius: 50%;
 }
 
 .rect-part{
     position: absolute;
   width: 100px;
   height: 150px;
-  background: linear-gradient(145deg, #706767, #5a5151);
-  border-radius: 4px; /* adds a slightly softer edge */
-  box-shadow: inset 2px 2px 5px rgba(161, 150, 150, 0.6),  /* lighter inner highlight */
-              inset -2px -2px 5px rgba(0,0,0,0.3);     /* softer inner shadow */
+  background: linear-gradient(145deg, #1a1a1a, #000);
+  border-radius: 4px; /* optional for a softer edge */
+  box-shadow: inset 2px 2px 5px rgba(255,255,255,0.2), /* light reflection */
+              inset -2px -2px 5px rgba(0,0,0,0.8);
+  text-transform: uppercase;            
   top: 5%;
   left: 46.5%;
   z-index: 1000;
@@ -45,7 +79,38 @@
     justify-content: space-around;
     align-items: center;
 text-align: center;
-  
+  font-weight: bold;
+  color: white;
+}
+
+.rect-text{
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.rect-part::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background-color: white;
+  transform: translateY(-50%);
+}
+
+.WHy{
+    width: 30px;
+    height: 310px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    overflow: hidden;
+    position: relative;
+
 }
 
 
@@ -57,8 +122,8 @@ text-align: center;
     box-shadow: 5px 5px 10px 5px rgba(0,0,0,0.5);
     background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 100%);
     border-radius: 0%;
-    top: 5%;
-    left: 47%;
+    top: 6%;
+    left: 50%;
     z-index: 999;
     opacity: 0.5;
 }
@@ -87,17 +152,38 @@ text-align: center;
     position: relative;
     z-index: 10;
     background: transparent;
-    color: rgba(247, 247, 247, 0.9);
-    text-shadow: 0 0 3px rgba(255, 153, 0, 0.3);
-    border:none;
+    
+    /* Create a small inset panel effect */
+    background: linear-gradient(145deg, rgba(65, 55, 55, 0.9), rgba(75, 65, 65, 0.6));
+    width: 80%;
+    border-radius: 3px;
+    padding: 2px 4px;
+    
+    /* Text styling */
+    color: rgba(220, 220, 220, 0.9);
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-family: "Orbitrn", serif;
-    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
+    
+    /* Create inset text effect */
+    text-shadow: 
+        -1px -1px 0px rgba(0, 0, 0, 0.7),
+        1px 1px 0px rgba(150, 140, 140, 0.15);
+    
+    /* Create inset panel effect */
+    box-shadow: 
+        inset 1px 1px 2px rgba(0, 0, 0, 0.8),
+        inset -1px -1px 1px rgba(255, 255, 255, 0.1);
+    
+    /* 3D effect modifications */
     transform: translateZ(-5px) rotateY(-15deg);
     transform-style: preserve-3d;
     cursor: pointer;
-  }
+    
+    /* Remove default button styling */
+    border: none;
+    outline: none;
+}
   
   .questions-button:hover {
     text-shadow:
@@ -110,7 +196,7 @@ text-align: center;
     content: '';
     position: absolute;
     width: 200%;
-    height: 50%; /* Smaller height to target buttons better */
+    height: 100%; /* Smaller height to target buttons better */
     top: 0;
     left: -200%;
     background: linear-gradient(
@@ -134,17 +220,17 @@ text-align: center;
   
   /* Class-based animation targeting instead of hover */
   .shine-btn1 {
-    top: 20%; /* Position for first button */
+    top: 0%; /* Position for first button */
     animation: shine-effect 0.7s forwards;
   }
   
   .shine-btn2 {
-    top: 40%; /* Position for second button */
+    top: 25%; /* Position for second button */
     animation: shine-effect 0.7s forwards;
   }
   
   .shine-btn3 {
-    top: 60%; /* Position for third button */
+    top: 45%; /* Position for third button */
     animation: shine-effect 0.7s forwards;
   }
   
