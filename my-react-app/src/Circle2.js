@@ -34,11 +34,17 @@ const Circle2 = () => {
     const [smallSolved, setSmallSolved] = useState(false);
     const [numCorrect, setNumCorrect] = useState(0);
     const [win, setWin] = useState(0);
+    const [selectedOption, setSelectedOption] = useState(null);
 
     const DEFAULT_OFFSET = 45;
 
-    const handleOptionSelect = (optionNumber) => {
-        if (optionNumber === 1 && lives > 0) {
+
+    const handleSelectedOption = (option) => {
+        setSelectedOption(option);
+    };
+
+    const isSelectionCorrect = () => {
+        if (selectedOption === 1 && lives > 0) {
             if (data.option1 === data.score) {
                 console.log("Correct option 1");
                 setWin(45);
@@ -48,7 +54,7 @@ const Circle2 = () => {
                 setLives((prev) => prev - 1);
             }
         } 
-        else if (optionNumber === 2 && lives > 0) {
+        else if (selectedOption === 2 && lives > 0) {
             if (data.option2 === data.score) {
                 console.log("Correct option 2");
                 setWin(45);
@@ -58,7 +64,7 @@ const Circle2 = () => {
                 setLives((prev) => prev - 1);
             }
         }
-        else if (optionNumber === 3 && lives > 0) {
+        else if (selectedOption === 3 && lives > 0) {
             if (data.option3 === data.score) {
                 console.log("Correct option 3");
                 setWin(45);
@@ -68,7 +74,6 @@ const Circle2 = () => {
                 setLives((prev) => prev - 1);
             }
         }
-        console.log("Selected option:", optionNumber);
         // Add further logic here for when a button is selected.
       };
 
@@ -319,6 +324,10 @@ const Circle2 = () => {
             setFeedback("Game Over :/");
             return;
         }
+        if (smallSolved && bigSolved && hugeSolved) {
+            isSelectionCorrect();
+            return;
+        }
         if (smallCurrent === smallCircleAnswer && bigCurrent === bigCircleAnswer && hugeCurrent === hugeCircleAnswer && numCorrect <= 3) {
             setSmallSolved(true);
             setBigSolved(true);
@@ -460,7 +469,6 @@ const Circle2 = () => {
         
         </div>
             <div className={`feedback ${score === 10 ? 'feedback-active' : ''}`}>
-                {score}
                 
             </div>
             <div className='meter-container'>
@@ -476,12 +484,7 @@ const Circle2 = () => {
             {/* New row of option buttons */}
             { (bigSolved && smallSolved && hugeSolved) && (
                 <div className="option-buttons">
-                <div className="option-label">Select the exact score given.</div>
-                <div className="buttons-row">
-                    <button onClick={() => handleOptionSelect(1)}>{data.option1}</button>
-                    <button onClick={() => handleOptionSelect(2)}>{data.option2}</button>
-                    <button onClick={() => handleOptionSelect(3)}>{data.option3}</button>
-                </div>
+                
                 </div>
             )}
             </div>
@@ -497,8 +500,9 @@ const Circle2 = () => {
             
             <ArmPortal>
                 <div className='arm-container'> 
-                    <Arm value = {win}/>
+                    <Arm value = {win} data = {data} onSelect={handleSelectedOption} selectedOption={selectedOption}/>
                 </div>
+                
             </ArmPortal>
         
         </div>
