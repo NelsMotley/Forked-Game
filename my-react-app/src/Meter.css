@@ -1,6 +1,7 @@
 .meter {
-    width: 300px;
-    height: 100px;
+    width: 15.625vw;
+    height: 5.25vw;
+    aspect-ratio: 1 / 1;
     position: relative;
     border-radius: 15px;
     z-index: 9;
@@ -41,18 +42,18 @@
 }
 
 .tick{
-    width : 2px;
+    width : .1vw;
     top: 150%;
     left:50%;
-    height: 10px;
+    height: .5vw;
     background: #000;
     position: absolute;
     transform-origin: center;
 }
 
 .meter-needle {
-    width: 2px;
-    height: 180px;
+    width: 0.1vw;
+    height: 9.1vw;
     background: red;
     position:absolute;
     bottom: -130%;
@@ -65,7 +66,7 @@
 
 .arc {
     --a: 61deg; /* control the progression */
-    width: 360px;
+    width: 18.75vw;
     transform: rotate(-30deg);
     background: #070707;
     position:absolute;
@@ -83,7 +84,7 @@
 
 .meter-label {
     position: absolute;
-    bottom: 25px;
+    bottom: 2vmin;
     width: 100%;
     text-align: center;
     font-family: "Orbitron", serif;
