@@ -44,6 +44,24 @@ const Circle2 = () => {
         setSelectedOption(option);
     };
 
+    useEffect(() => {
+        // Check screen width when component mounts
+        const handleScreenSize = () => {
+          if (window.innerWidth < 800) {
+            setWin(-5);
+          }
+        };
+        handleScreenSize();
+        
+        
+    }, []);
+
+    const handleScreenSize = () => {
+        if (window.innerWidth < 800) {
+          setWin(-5);
+        }
+      };
+
     const isSelectionCorrect = () => {
         if (selectedOption === 1 && lives > 0) {
             if (data.option1 === data.score) {
@@ -261,6 +279,7 @@ const Circle2 = () => {
                 setBigSolved(false);
                 setSmallSolved(false);
                 setWin(0);
+                handleScreenSize();
                 setFinished(false);
             })
             .catch(error => {
@@ -379,18 +398,21 @@ const Circle2 = () => {
         <div>
             <div className='fake'>
             <div className='test'>
-            <div className='logo-container'>
-            <div className='logo'>
-            <Textfit mode="single" forceSingleModeWidth={true} max={60} style={{ width: '90%', height: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <h2 className="question-label"> {data.artist} </h2>
-                </Textfit>
+            <div className='logo-wrapper'>
+                <div className='logo-container'>
+                    <div className='logo'>
+                        <Textfit mode="single" forceSingleModeWidth={true} max={60} style={{ width: '90%', height: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <h2 className="question-label"> {data.artist} </h2>
+                        </Textfit>
+                    </div>
+                    <div className='subtitle-wrapper'>
+                        <Textfit mode="multi" forceSingleModeWidth={false} max={60} style={{ width: '90%', height: 'auto', display: 'flex',justifyContent: 'center', alignItems: 'center', lineHeight: 1.1 }}>
+                            <div className="orbitron-subtitle">{data.album}</div>
+                        </Textfit>
+                    </div>
+                </div>
             </div>
-            <div className='subtitle-wrapper'>
-                <Textfit mode="single" forceSingleModeWidth={true} max={60} style={{ width: '90%', height: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <div className="orbitron-subtitle">{data.album}</div>
-                </Textfit>
-            </div>
-            </div>
+            
           
         <div className='content-container'>
         <div className='circle-container'>
@@ -477,6 +499,7 @@ const Circle2 = () => {
             <div className={`feedback ${score === 10 ? 'feedback-active' : ''}`}>
                 
             </div>
+            <div className='info-box'>
             <div className='meter-container'>
             
             <Meter value = {lives/4}/>
@@ -486,6 +509,9 @@ const Circle2 = () => {
                 
                 <div className='button-housing'><button className = "play-button"  onClick={checkAnswers}>Check <br></br>Answer</button></div>
             
+            </div>
+            </div>
+
 
             {/* New row of option buttons */}
             { (bigSolved && smallSolved && hugeSolved) && (
@@ -493,16 +519,12 @@ const Circle2 = () => {
                 
                 </div>
             )}
+            
+                
             </div>
-                <h1 style={{height: "50px"}}></h1>
+            
             </div>
-            <div className="life-bar-container">
-                 
-            </div> 
-            </div>
-            <div className='Slider-container'>
-                <Slider value = {win}/>
-            </div>
+            
             
             <ArmPortal>
                 <div className='arm-container'> 

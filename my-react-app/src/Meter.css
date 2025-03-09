@@ -42,7 +42,8 @@
 }
 
 .tick{
-    width : .1vw;
+    width : 0.7%;
+    height: 12%;
     top: 150%;
     left:50%;
     height: .5vw;
@@ -52,8 +53,8 @@
 }
 
 .meter-needle {
-    width: 0.1vw;
-    height: 9.1vw;
+    width: 1%;
+    height: 220%;
     background: red;
     position:absolute;
     bottom: -130%;
@@ -66,7 +67,7 @@
 
 .arc {
     --a: 61deg; /* control the progression */
-    width: 18.75vw;
+    width: 133%;
     transform: rotate(-30deg);
     background: #070707;
     position:absolute;
@@ -84,7 +85,7 @@
 
 .meter-label {
     position: absolute;
-    bottom: 2vmin;
+    bottom: 10%;
     width: 100%;
     text-align: center;
     font-family: "Orbitron", serif;
@@ -92,6 +93,7 @@
     font-style: normal;
     color: #181414;
     z-index: 9;
+    font-size: 0.95vw;
 }
 
 .metallic {
