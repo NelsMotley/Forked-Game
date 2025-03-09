@@ -6,25 +6,20 @@ body {
   align-items: center;
   height: 100vh; /* Full height of the viewport */
   background-color: rgb(218, 232, 245); /* Optional: set a background color */
-  
+  background-image: url("./High_resolution_wallpaper_background_ID_77702096178.webp"); /* Replace with your image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 
 }
 
-.Slider-container{
-  position: absolute;
-  top: 30%;
-  left: 700%;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 
 
 .test{
   position: relative;
- 
+  
 }
 
 .background {
@@ -44,8 +39,8 @@ body {
 
 .arm-container {
   position: absolute;
-  width: 150px;
-  height: 600px;
+  width: 7.8125vw;    
+  aspect-ratio: 1/4; 
   top: 10%;
   left: 75%;  
   z-index: 9999; /* high z-index to be on top */
@@ -69,11 +64,16 @@ body {
   z-index: -2;
 }
 
+.logo-wrapper{
+  position: absolute;
+  left: 37%;
+  width:40vw;
+  top: 5%;
+  
+}
+
 .logo-container {
   position: relative;
-  top: 90px;
-  left: 70%;
-  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -83,9 +83,8 @@ body {
 
 
 .logo {
-  position: absolute;
-  left : 45%;
-  height: 75px;
+  position: relative;
+  height: 8vh;
   width: 40%;
   border: 5px solid black;
   display: flex;
@@ -94,6 +93,7 @@ body {
   border-image: linear-gradient(120deg, #b8b8b8, #f0f0f0, #8a8a8a, #e0e0e0, #545454) 1;
   background-size: 200%;
   box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6);
+  margin: 0 auto;
 }
 
 .question-label {
@@ -107,55 +107,61 @@ body {
     font-optical-sizing: auto;
     font-weight: 900; /* from 400 to 900, 900 being bold */
     font-style: normal;
-    white-space: nowrap;
     text-overflow: ellipsis;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .meter-container {
-  position: absolute;
-  top : 73%;
-  left: 67%;
-}
-
-
-.subtile-wrapper {
-  position: absolute;
-  width: 100%;
-  top: 100%;
-  left: 70%;
-  transform: translateX(-50%) translateY(250%);
-  font-family: "Orbitron", serif;
-  font-weight: 900;
-  font-style: normal;
-  color: #e0e0e0;
-}
-.orbitron-subtitle{
+  position: relative;
   
+}
+
+.info-box {
   position: absolute;
-  top: 100%;
-  left: 66%;
-  transform: translateX(-50%) translateY(250%);
+  bottom: 4%;
+  left: 62%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.5rem;
+}
+
+
+.subtitle-wrapper {
+  margin-top: 20px;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  align-items: center;
+}
+.orbitron-subtitle {
+  position: relative;
   font-family: "Orbitron", serif;
   font-weight: 900;
   font-style: normal;
   color: #e0e0e0;
+  max-width: 90%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 1vmax;
+  line-height: 1.2;
 }
-
 
 
 .circle-wrapper {
     position: relative;
     width: 41.6667vw;
-    height: 41.6667vw;
     aspect-ratio: 1 / 1;
-    transform: translate(-31%, 5%);
+    transform: translate(-35%, 0%);
     margin: 0 auto;
 }
 
 .circle2 {
   position: absolute;
-
     border-radius: 50%; /* Makes the div a circle */
     background-color: #3498db; /* Circle color */
     overflow: hidden; /* Hides the border */
@@ -176,23 +182,24 @@ body {
   height: 10.4vw;
   aspect-ratio: 1 / 1;
     z-index: 2;
+    transform: translate(-50%, -50%);
 }
 
 .big-circle{
   top: 50%;
   left: 50%;
   width: 20.83333vw;
-  height: 20.83333vw;
+  border: 1px solid rgb(141, 140, 140);
   aspect-ratio: 1 / 1;
     z-index: 1;
     background-color: rgba(0, 0, 0, 0.05);
+    transform: translate(-50%, -50%);
 }
 
 .huge-circle{
   top: 0%;
   left: 0%;
   width: 41.6667vw;
-  height: 41.6667vw;
   aspect-ratio: 1 / 1;
     z-index: 0;
     background-color: rgba(0, 0, 0, 0.1);
@@ -264,6 +271,10 @@ body {
   border: 1px solid transparent;
 }
 
+.small-circle .quadrant-text{
+  color: #333333;
+}
+
 
 .big-circle .quadrant-text{
     position: absolute;
@@ -272,7 +283,7 @@ body {
     pointer-events: none;
     font-size: 1.5vmin;
     font-weight: bold;
-    color: white;
+    color: #cccccc;
     writing-mode: vertical-rl;
     text-orientation: mixed;
 }
@@ -289,15 +300,21 @@ body {
     justify-content: center;
     align-items: center;
     font-size: 1.3vmin;
-    color: white;
+    color: #cccccc;
     font-weight: bold;
     text-align: center;
     overflow: hidden;
     
+    
 }
 
 .quadrant:hover {
-  background-color: rgb(255, 255, 0); /* Highlight background on hover */
+  background-color: #7b9fcf; /* Highlight background on hover */
+  cursor: pointer;
+}
+
+.small-circle .quadrant:hover {
+  background-color: #7b9fcf; /* Highlight background on hover */
   cursor: pointer;
 }
 
@@ -311,40 +328,57 @@ body {
     transition: transform 0.5s ease-in-out;
 }
 
+.small-circle .top-left {
+  background-color: #FF7377; /* Blue */
+}
+
+.small-circle .top-right {
+  background-color: #FF7377; /* Red */
+}
+
+.small-circle .bottom-left {
+  background-color: #FF7377; /* Green */
+}
+
+.small-circle .bottom-right {
+  background-color: #FF7377; /* Yellow/Gold */
+}
+
 .top-left {
     top: 0;
     left: 0;
-    background-color: #3498db; /* Blue */
+    background-color:  #333333; /* Blue */
+    border-top-left-radius: 100%;
   }
   
   .top-right {
     top: 0;
     right: 0;
-    background-color: #e74c3c; /* Red */
+    background-color:  #333333; /* Red */
+    border-top-right-radius: 100%;
   }
   
   .bottom-left {
     bottom: 0;
     left: 0;
-    background-color: #2ecc71; /* Green */
+    background-color: #333333; /* Green */
+    border-bottom-left-radius: 100%;
   }
   
   .bottom-right {
     bottom: 0;
     right: 0;
-    background-color: #f1c40f; /* Yellow */
+    background-color:  #333333; /* Yellow */
+    border-bottom-right-radius: 100%;
   }
 
 
 .buttons-container {
-    position: absolute;
-    bottom: -15vh;
-    top: 58vh;
-    margin-left: 27vw;
+    position: relative;
     margin-top: 2vh;
     display: flex;
     flex-direction: row;
-    gap: 1vh;
+    gap: clamp(8px, 1vw, 16px);
     align-items: center;
 }
 
@@ -354,7 +388,7 @@ body {
             font-family: Arial, sans-serif;
             font-size: 0.9vmax;
             font-weight: bold;
-            padding: 20px 40px;
+            padding: clamp(10px, 1.5vw, 20px) clamp(20px, 3vw, 40px);
             border: 2px solid #222;
             border-radius: 0px;
             text-transform: uppercase;
@@ -365,11 +399,12 @@ body {
             position: relative;
             cursor: pointer;
             overflow: hidden;
+            width: clamp(25px, 10vw, 150px); 
 }
 
 .button-housing {
   background: #111; /* Dark rubberized black */
-  padding: 8px; /* Thickness of border */
+  padding: clamp(6px, 0.5vw, 10px); /* Thickness of border */
   display: inline-block;
   border-radius: 4px; /* Slight rounding */
   box-shadow: 
@@ -379,14 +414,15 @@ body {
 }
 
 .play-button:before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background-color: white;
-    transform: translateY(-50%);
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%; /* This was missing - needed for centering */
+  height: clamp(1px, 0.15vw, 3px);
+  width: 80%; /* Fixed width using viewport width */
+  background-color: white;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
 .play-button::after {
@@ -479,34 +515,36 @@ body {
 } 
 
 
-
-.correct-quadrant2 {
+.small-circle .correct-quadrant2 .quadrant-text{
+  color: white;
+}
+.small-circle .correct-quadrant2 {
   background-color: rgb(195, 69, 57);
 }
 
-.incorrect-quadrant2 {
+.small-circle .incorrect-quadrant2 {
   background-color: rgb(195, 69, 57);
 }
 
-.incorrect-quadrant2 .quadrant-text {
+.small-circle .incorrect-quadrant2 .quadrant-text {
   pointer-events: auto;
   color: rgb(195, 69, 57); /* or any color you prefer */
 }
 
-.correct-quadrant2:hover {
+.small-circle .correct-quadrant2:hover {
   background-color: rgb(195, 69, 57);
 }
 
-.correct-quadrant2:hover .quadrant-text{
+.small-circle .correct-quadrant2:hover .quadrant-text{
   color: white !important;
 }
 
-.incorrect-quadrant2:hover {
+.small-circle .incorrect-quadrant2:hover {
   background-color: rgb(195, 69, 57);
   cursor: pointer;
 } 
 
-.incorrect-quadrant2:hover .quadrant-text {
+.small-circle .incorrect-quadrant2:hover .quadrant-text {
   color: rgb(195, 69, 57) !important;
 }
 
