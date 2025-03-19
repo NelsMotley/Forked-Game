@@ -1,0 +1,243 @@
+.progress-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .progress-container.vertical {
+    height: 400px; /* Adjust as needed */
+  }
+  
+  .tuner-box {
+    position: relative;
+    background-color: #333;
+    border-radius: 0px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .vertical .tuner-box {
+    width: 150px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  
+  .scale-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  
+  .vertical .scale-labels {
+    flex-direction: column;
+    margin-bottom: 0;
+    margin-right: 5px;
+    position: absolute;
+    top: 15px;
+    left: 5px;
+  }
+  
+  .scale-label {
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  .vertical .scale-label {
+    margin-bottom: 5px;
+  }
+  
+  .tuner-display {
+    position: relative;
+    background-color: #222;
+    border-radius: 0px;
+    height: 80px;
+    margin-bottom: 0px;
+    overflow: hidden;
+  }
+  
+  .vertical .tuner-display {
+    height: 300px;
+    width: 100px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+  }
+  
+  .primary-scale, .secondary-scale {
+    position: relative;
+    height: 40px;
+  }
+  
+  .vertical .primary-scale, .vertical .secondary-scale {
+    height: 100%;
+    width: 40px;
+    float: left;
+  }
+  
+  .scale-inner {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .tick-major, .tick-minor {
+    position: absolute;
+    background-color: white;
+  }
+  
+  .tick-major {
+    width: 2px;
+    height: 10px;
+    bottom: 0;
+  }
+  
+  .tick-minor {
+    width: 1px;
+    height: 5px;
+    bottom: 0;
+  }
+  
+  .vertical .tick-major {
+    width: 10px;
+    height: 2px;
+    right: 0;
+  }
+  
+  .vertical .tick-minor {
+    width: 5px;
+    height: 1px;
+    right: 0;
+  }
+  
+  .frequency-number-top, .frequency-number-bottom {
+    position: absolute;
+    font-size: 8px;
+    color: white;
+    transform: translateX(-50%);
+  }
+  
+  .frequency-number-left, .frequency-number-right {
+    position: absolute;
+    font-size: 8px;
+    color: white;
+    transform: translateY(50%);
+  }
+  
+  .frequency-number-top {
+    top: 2px;
+  }
+  
+  .frequency-number-bottom {
+    bottom: 2px;
+  }
+  
+  .frequency-number-left {
+    left: 2px;
+  }
+  
+  .frequency-number-right {
+    right: 2px;
+  }
+  
+  .gradient-line-container {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 15px;
+  }
+  
+  .vertical .gradient-line-container {
+    width: 2px;
+    height: 100%;
+    left: 30px;
+    bottom: auto;
+  }
+  
+  .gradient-line-primary {
+    height: 100%;
+    background: linear-gradient(to right, #f00, #ff0, #0f0);
+  }
+  
+  .gradient-line-secondary {
+    height: 100%;
+    background: linear-gradient(to right, #f00, #ff0, #0f0);
+  }
+  
+  .vertical .gradient-line-primary, .vertical .gradient-line-secondary {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, #f00, #ff0, #0f0);
+  }
+  
+  .indicator-needle {
+    position: absolute;
+    height: 100%;
+    width: 5px;
+    background-color: white;
+   
+    transition: left 0.1s ease-out;
+  }
+  
+  .vertical .indicator-needle {
+    height: 3px;
+    width: 100%;
+    left: 0;
+    transition: bottom 0.1s ease-out;
+  }
+  
+  .needle-dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: white;
+    border-radius: 50%;
+    left: -2.5px;
+  }
+  
+  .vertical .needle-dot {
+    left: auto;
+    bottom: -2.5px;
+  }
+  
+  .needle-dot.top {
+    top: 0;
+  }
+  
+  .needle-dot.bottom {
+    bottom: 0;
+  }
+  
+  .needle-dot.left {
+    left: 0;
+  }
+  
+  .needle-dot.right {
+    right: 0;
+  }
+  
+  .label-container {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    margin-top: 5px;
+  }
+  
+  .value-text {
+    font-weight: bold;
+  }
+  
+  .branding {
+    text-align: center;
+    margin-top: 5px;
+  }
+  
+  .brand-text {
+    color: #777;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }

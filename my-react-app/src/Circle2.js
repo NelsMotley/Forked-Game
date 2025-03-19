@@ -7,6 +7,7 @@ import Slider from './Slilder.js';
 import Arm from './Arm.js';
 import axios from 'axios';
 import ArmPortal from './ArmPortal.js';
+import VictoryModal from './WinScreen.js';
 
 const Circle2 = () => {
     const [smallCircleRotation, setSmallCircleRotation] = useState(0);
@@ -36,6 +37,8 @@ const Circle2 = () => {
     const [win, setWin] = useState(0);
     const [finished, setFinished] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
+    const [numRounds, setNumRounds] = useState(0);
+    const [hasWon, setHasWon] = useState(true);
 
     const DEFAULT_OFFSET = 45;
 
@@ -48,7 +51,7 @@ const Circle2 = () => {
         // Check screen width when component mounts
         const handleScreenSize = () => {
           if (window.innerWidth < 800) {
-            setWin(-5);
+            setWin(-10);
           }
         };
         handleScreenSize();
@@ -56,9 +59,22 @@ const Circle2 = () => {
         
     }, []);
 
+    useEffect(() => {
+        // Check if numRounds has reached 3
+        if (numRounds === 3 && !hasWon) {
+          // Wait 2 seconds, then set hasWon to true
+          const timer = setTimeout(() => {
+            setHasWon(true);
+          }, 2000); // 2000 milliseconds = 2 seconds
+          
+          // Clean up the timer if the component unmounts or numRounds changes again
+          return () => clearTimeout(timer);
+        }
+      }, [numRounds, hasWon]);
+
     const handleScreenSize = () => {
         if (window.innerWidth < 800) {
-          setWin(-5);
+          setWin(-10);
         }
       };
 
@@ -67,6 +83,8 @@ const Circle2 = () => {
             if (data.option1 === data.score) {
                 console.log("Correct option 1");
                 setWin(45);
+                setNumRounds(numRounds + 1);
+                
                 setFinished(false);
                 setScore(10);
             }
@@ -78,6 +96,7 @@ const Circle2 = () => {
             if (data.option2 === data.score) {
                 console.log("Correct option 2");
                 setWin(45);
+                setNumRounds(numRounds + 1);
                 setFinished(false);
                 setScore(10);
             }
@@ -89,6 +108,8 @@ const Circle2 = () => {
             if (data.option3 === data.score) {
                 console.log("Correct option 3");
                 setWin(45);
+                setNumRounds(numRounds + 1);
+               
                 setFinished(false);
                 setScore(10);
             }
@@ -259,6 +280,9 @@ const Circle2 = () => {
             .then(response => {
                 const newData = response.data;
                 console.log("New puzzle data:", newData);
+                if(win != 45){
+                    setNumRounds(0);
+                }
                 setData(newData);
                 setBigCircleAnswer(newData.answer2);
                 setSmallCircleAnswer(newData.answer1);
@@ -396,7 +420,36 @@ const Circle2 = () => {
 
     return (
         <div>
+
+                    
             <div className='fake'>
+            
+            <div className='stereo-sidebar'>
+                <div className='brand-name'>Forkle</div>
+                    <div class="menu-buttons">
+                    <a href="#home" class="stereo-button active">
+                        <div class="button-icon icon-play"></div>
+                        <div class="button-text">play</div>
+                    </a>
+                    <a href="#services" class="stereo-button">
+                        <div class="button-icon icon-home"></div>
+                        <div class="button-text">Guide</div>
+                    </a>
+                    <a href="#about" class="stereo-button">
+                        <div class="button-icon icon-about"></div>
+                        <div class="button-text">About</div>
+                    </a>
+                    
+                    <a href="#gallery" class="stereo-button">
+                        <div class="button-icon icon-gallery"></div>
+                        <div class="button-text">Bug</div>
+                    </a>
+                    </div>
+            
+                    
+                    
+                    
+            </div>
             <div className='test'>
             <div className='logo-wrapper'>
                 <div className='logo-container'>
@@ -412,6 +465,7 @@ const Circle2 = () => {
                     </div>
                 </div>
             </div>
+           
             
           
         <div className='content-container'>
@@ -528,11 +582,17 @@ const Circle2 = () => {
             
             <ArmPortal>
                 <div className='arm-container'> 
-                    <Arm value = {win} data = {data} onSelect={handleSelectedOption} selectedOption={selectedOption} fin = {finished}/>
+                    <Arm value = {win} data = {data} onSelect={handleSelectedOption} selectedOption={selectedOption} fin = {finished} rounds = {numRounds}/>
                 </div>
                 
             </ArmPortal>
-        
+            
+            <VictoryModal
+                    isVisible={hasWon}
+                    onClose={() => setHasWon(false)}
+                    width="400px"
+                    height="300px"
+            />
         </div>
 
         

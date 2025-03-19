@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Arm.css";
+import ProgressLightsDemo from './ProgressLightsDemo.js';
 
-const Arm = ({ value, data, lives, onSelect, fin }) => {
+const Arm = ({ value, data, lives, onSelect, fin, rounds }) => {
   // Create refs for elements we need to manipulate
   const armShineRef = useRef(null);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -37,6 +38,7 @@ const Arm = ({ value, data, lives, onSelect, fin }) => {
       <div className="arm" style={{ transform: `rotate(${value}deg)` }}>
         <div className="circle-part"></div>
         <div className="rect-part">
+          <ProgressLightsDemo correct = {rounds}/>
           {fin && (<div className="rect-text"></div>)}
         </div>
         <div className="big-shadow"></div>
