@@ -23,3 +23,8 @@ yarn-debug.log*
 yarn-error.log*
 
 PitchforkData/database.sqlite
+scores copy.csv
+scores.csv
+Merged_artist_data.csv
+offsets.txt
+Final-scores.csv

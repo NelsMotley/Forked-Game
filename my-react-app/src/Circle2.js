@@ -38,7 +38,8 @@ const Circle2 = () => {
     const [finished, setFinished] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
     const [numRounds, setNumRounds] = useState(0);
-    const [hasWon, setHasWon] = useState(true);
+    const [wholeJSON, setWholeJSON] = useState([])
+    const [hasWon, setHasWon] = useState(false);
 
     const DEFAULT_OFFSET = 45;
 
@@ -59,18 +60,7 @@ const Circle2 = () => {
         
     }, []);
 
-    useEffect(() => {
-        // Check if numRounds has reached 3
-        if (numRounds === 3 && !hasWon) {
-          // Wait 2 seconds, then set hasWon to true
-          const timer = setTimeout(() => {
-            setHasWon(true);
-          }, 2000); // 2000 milliseconds = 2 seconds
-          
-          // Clean up the timer if the component unmounts or numRounds changes again
-          return () => clearTimeout(timer);
-        }
-      }, [numRounds, hasWon]);
+   
 
     const handleScreenSize = () => {
         if (window.innerWidth < 800) {
@@ -124,18 +114,52 @@ const Circle2 = () => {
         axios.get('http://localhost:5000/api/review')
             .then(response => {
                 console.log(response.data);
-                setData(response.data);
-                setBigCircleAnswer(response.data.answer2);
-                setSmallCircleAnswer(response.data.answer1);
-                setHugeCircleAnswer(response.data.answer3);
-                setSmallCurrent(response.data.score1);
-                setBigCurrent(response.data.genre1);
-                setHugeCurrent(response.data.sentence1);
+                setData(response.data.easy);
+                setWholeJSON(response.data);
+                setBigCircleAnswer(response.data.easy.correct_genre);
+                setSmallCircleAnswer(response.data.easy.correct_score);
+                setHugeCircleAnswer(response.data.easy.correct_quote);
+                setSmallCurrent(response.data.easy.scores.s1);
+                setBigCurrent(response.data.easy.genres.g1);
+                setHugeCurrent(response.data.easy.quotes.q1);
             })
             .catch(error => {
                 console.log(error);
             });
     }, []);
+
+    const reset_game = () => {
+        axios.get('http://localhost:5000/api/review')
+            .then(response => {
+                console.log(response.data);
+                setData(response.data.easy);
+                setWholeJSON(response.data);
+                setBigCircleAnswer(response.data.easy.correct_genre);
+                setSmallCircleAnswer(response.data.easy.correct_score);
+                setHugeCircleAnswer(response.data.easy.correct_quote);
+                setSmallCurrent(response.data.easy.scores.s1);
+                setBigCurrent(response.data.easy.genres.g1);
+                setHugeCurrent(response.data.easy.quotes.q1);
+                setNumRounds(0);
+                setSmallCircleRotation(0);
+                    setBigCircleRotation(0);
+                    setHugeCircleRotation(0);
+                    setHugeRight([0,0,1,0]);
+                    setIsOdd(false);
+                    setIsOdd2(true);
+                    setLives(4);
+                    setScore(0.0);
+                    setHugeSolved(false);
+                    setBigSolved(false);
+                    setSmallSolved(false);
+                    setWin(0);
+                    handleScreenSize();
+                    setFinished(false);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
 
     const handleCircleClick = (circle) => {
         console.log("Selected circle: " + circle);
@@ -169,19 +193,19 @@ const Circle2 = () => {
             setSmallCircleRotation((prev) => {
                 switch (quadrantName) {
                     case 'top':
-                        setSmallCurrent(data.score1);
+                        setSmallCurrent(data.scores.s1);
                         targetRotation = 0;
                         break;
                     case 'right':
-                        setSmallCurrent(data.score2);
+                        setSmallCurrent(data.scores.s3);
                         targetRotation = -90;
                         break;
                     case 'bottom':
-                        setSmallCurrent(data.score4);
+                        setSmallCurrent(data.scores.s4);
                         targetRotation = 180;
                         break;
                     case 'left':
-                        setSmallCurrent(data.score3);
+                        setSmallCurrent(data.scores.s2);
                         targetRotation = 90;
                         break;
                     default:
@@ -201,22 +225,22 @@ const Circle2 = () => {
             setBigCircleRotation((prev) => {
                 switch (quadrantName) {
                     case 'top':
-                        setBigCurrent(data.genre1);
+                        setBigCurrent(data.genres.g1);
                         setIsOdd(false);
                         targetRotation = 0;
                         break;
                     case 'right':
-                        setBigCurrent(data.genre2);
+                        setBigCurrent(data.genres.g2);
                         setIsOdd(true);
                         targetRotation = -90;
                         break;
                     case 'bottom':
-                        setBigCurrent(data.genre4);
+                        setBigCurrent(data.genres.g4);
                         setIsOdd(false);
                         targetRotation = 180;
                         break;
                     case 'left':
-                        setBigCurrent(data.genre3);
+                        setBigCurrent(data.genres.g3);
                         setIsOdd(true);
                         targetRotation = 90;
                         break;
@@ -238,22 +262,22 @@ const Circle2 = () => {
             setHugeCircleRotation((prev) => {
                 switch (quadrantName) {
                     case 'top':
-                        setHugeCurrent(data.sentence1);
+                        setHugeCurrent(data.quotes.q1);
                         setIsOdd2(true);
                         targetRotation = 0;
                         break;
                     case 'right':
-                        setHugeCurrent(data.sentence2);
+                        setHugeCurrent(data.quotes.q2);
                         setIsOdd2(false);
                         targetRotation = -90;
                         break;
                     case 'bottom':
-                        setHugeCurrent(data.sentence4);
+                        setHugeCurrent(data.quotes.q4);
                         setIsOdd2(true);
                         targetRotation = 180;
                         break;
                     case 'left':
-                        setHugeCurrent(data.sentence3);
+                        setHugeCurrent(data.quotes.q3);
                         setIsOdd2(false);
                         targetRotation = 90;
                         break;
@@ -276,39 +300,53 @@ const Circle2 = () => {
       };
 
       const handleRotateClick = () => {
-        axios.get('http://localhost:5000/api/review')
-            .then(response => {
-                const newData = response.data;
-                console.log("New puzzle data:", newData);
-                if(win != 45){
-                    setNumRounds(0);
+        
+                if (finished && numRounds < 3){
+                    
+                    if(win != 45){
+                        setNumRounds(0);
+                    }
+
+                    if (numRounds == 1){
+                        
+                        setData(wholeJSON.medium);
+                        setBigCircleAnswer(wholeJSON.medium.correct_genre);
+                        setSmallCircleAnswer(wholeJSON.medium.correct_score);
+                        setHugeCircleAnswer(wholeJSON.medium.correct_quote);
+                        setSmallCurrent(wholeJSON.medium.scores.s1);
+                        setBigCurrent(wholeJSON.medium.genres.g1);
+                        setHugeCurrent(wholeJSON.medium.quotes.q1);
+                    }
+                
+                    if(numRounds == 2){
+                        setData(wholeJSON.hard);
+                        setBigCircleAnswer(wholeJSON.hard.correct_genre);
+                        setSmallCircleAnswer(wholeJSON.hard.correct_score);
+                        setHugeCircleAnswer(wholeJSON.hard.correct_quote);
+                        setSmallCurrent(wholeJSON.hard.scores.s1);
+                        setBigCurrent(wholeJSON.hard.genres.g1);
+                        setHugeCurrent(wholeJSON.hard.quotes.q1);
+                    }
+                    
+                    
+                    setSmallCircleRotation(0);
+                    setBigCircleRotation(0);
+                    setHugeCircleRotation(0);
+                    setHugeRight([0,0,1,0]);
+                    setIsOdd(false);
+                    setIsOdd2(true);
+                    setLives(4);
+                    setScore(0.0);
+                    setHugeSolved(false);
+                    setBigSolved(false);
+                    setSmallSolved(false);
+                    setWin(0);
+                    handleScreenSize();
+                    setFinished(false);
                 }
-                setData(newData);
-                setBigCircleAnswer(newData.answer2);
-                setSmallCircleAnswer(newData.answer1);
-                setHugeCircleAnswer(newData.answer3);
-                setSmallCurrent(newData.score1);
-                setBigCurrent(newData.genre1);
-                setHugeCurrent(newData.sentence1);
-                // Reset rotations if you prefer a consistent starting point:
-                setSmallCircleRotation(0);
-                setBigCircleRotation(0);
-                setHugeCircleRotation(0);
-                setHugeRight([0,0,1,0]);
-                setIsOdd(false);
-                setIsOdd2(true);
-                setLives(4);
-                setScore(0.0);
-                setHugeSolved(false);
-                setBigSolved(false);
-                setSmallSolved(false);
-                setWin(0);
-                handleScreenSize();
-                setFinished(false);
-            })
-            .catch(error => {
-                console.error("Error fetching new puzzle:", error);
-            });
+
+                
+           
     };
 
     const rotateHugeCircle = () => {
@@ -372,26 +410,34 @@ const Circle2 = () => {
             setFeedback("Game Over :/");
             return;
         }
-        if (smallSolved && bigSolved && hugeSolved) {
-            isSelectionCorrect();
-            return;
-        }
+        
         if (smallCurrent === smallCircleAnswer && bigCurrent === bigCircleAnswer && hugeCurrent === hugeCircleAnswer && numCorrect <= 3) {
             setFinished(true);
             setSmallSolved(true);
             setBigSolved(true);
             setHugeSolved(true);
             setScore((prev) => Math.round(((Math.random() * 2 + 7)) * 10) / 10);
+            setWin(45);
+            if(win < 45){
+                setNumRounds(numRounds + 1);
+            }
             console.log(smallSolved);
             console.log("Correct");
             setFeedback("Correct");
+            if ((numRounds + 1) >= 3 && !hasWon){
+                const timer = setTimeout(() => {
+                    setHasWon(true);
+                  }, 2000); 
+            }
         } else {
             let correctAnswers = 0;
             if (smallCurrent === smallCircleAnswer) {
+               
                 correctAnswers++;
                 setSmallSolved(true);
             }
             if (bigCurrent === bigCircleAnswer){
+                console.log("Correct is :" + bigCircleAnswer + " current is " + bigCurrent)
                 correctAnswers++;
                 setBigSolved(true);
             } 
@@ -410,11 +456,14 @@ const Circle2 = () => {
             setNumCorrect(correctAnswers);
             setLives((prev) => prev - 1);
             if (lives === 1) {
+                const timer = setTimeout(() => {
+                    setHasWon(true);
+                  }, 2000); 
                 setFeedback("Game Over :/");
                 return;
             }
             setFeedback("Incorrect");
-            console.log("Incorrect big correct answer is: " + bigCircleAnswer + " and small correct answer is: " + smallCircleAnswer);
+            console.log("Big current is " + bigCurrent + " and small answer is " + bigCircleAnswer);
         }
     };
 
@@ -455,12 +504,12 @@ const Circle2 = () => {
                 <div className='logo-container'>
                     <div className='logo'>
                         <Textfit mode="single" forceSingleModeWidth={true} max={60} style={{ width: '90%', height: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <h2 className="question-label"> {data.artist} </h2>
+                            <h2 className="question-label">{data ? data.correct_artist : ''}</h2>
                         </Textfit>
                     </div>
                     <div className='subtitle-wrapper'>
                         <Textfit mode="multi" forceSingleModeWidth={false} max={60} style={{ width: '90%', height: 'auto', display: 'flex',justifyContent: 'center', alignItems: 'center', lineHeight: 1.1 }}>
-                            <div className="orbitron-subtitle">{data.album}</div>
+                            <div className="orbitron-subtitle">{data ? data.correct_title : ''} </div>
                         </Textfit>
                     </div>
                 </div>
@@ -474,71 +523,71 @@ const Circle2 = () => {
             <div className='circle-wrapper'>
             <div className="inner-circle"></div>
             <div className={`circle2 small-circle ${selectedCircle === 'small' ? 'selected' : ''}`} style={{ transform: `translate(-50%, -50%) rotate(${smallCircleRotation + 45}deg)`, transition: `transform ${smallTransitionDuration} ease-in-out`}} onClick={() => handleCircleClick('small')}>
-                <div className={`quadrant top-left ${smallSolved ? (data.score1 === smallCircleAnswer ? "correct-quadrant2" : "incorrect-quadrant2") : "" }`}  
+                <div className={`quadrant top-left ${smallSolved ? (data.scores.s1  === smallCircleAnswer ? "correct-quadrant2" : "incorrect-quadrant2") : "" }`}  
                 onClick={(e) => handleQuadrantClick("small", "top", e)}>
-                    <div className='quadrant-text' style={{ transform: `rotate(${-smallCircleRotation - 45}deg)` }}>{data.score1}</div>
+                    <div className='quadrant-text' style={{ transform: `rotate(${-smallCircleRotation - 45}deg)` }}>{data && data.scores ? data.scores.s1 : ''}</div>
                 </div>
-                <div className={`quadrant top-right ${smallSolved ? (data.score2 === smallCircleAnswer ? "correct-quadrant2" : "incorrect-quadrant2") : "" }`}
+                <div className={`quadrant top-right ${smallSolved ? (data.scores.s3 === smallCircleAnswer ? "correct-quadrant2" : "incorrect-quadrant2") : "" }`}
                 onClick={(e) => handleQuadrantClick("small", "right", e)}>
-                    <div className='quadrant-text' style={{ transform: `rotate(${-smallCircleRotation - 45 }deg)` }}>{data.score2}</div>
+                    <div className='quadrant-text' style={{ transform: `rotate(${-smallCircleRotation - 45 }deg)` }}>{data && data.scores ? data.scores.s3 : ''}</div>
                 </div>
-                <div className={`quadrant bottom-left ${smallSolved ? (data.score3 === smallCircleAnswer ? "correct-quadrant2" : "incorrect-quadrant2") : "" }`}
+                <div className={`quadrant bottom-left ${smallSolved ? (data.scores.s2 === smallCircleAnswer ? "correct-quadrant2" : "incorrect-quadrant2") : "" }`}
                     onClick={(e) => handleQuadrantClick("small", "left", e)}>
-                    <div className='quadrant-text' style={{ transform: `rotate(${-smallCircleRotation - 45}deg)` }}>{data.score3}</div>
+                    <div className='quadrant-text' style={{ transform: `rotate(${-smallCircleRotation - 45}deg)` }}>{data && data.scores ? data.scores.s2 : ''}</div>
                 </div>
-                <div className={`quadrant bottom-right ${smallSolved ? (data.score4 === smallCircleAnswer ? "correct-quadrant2" : "incorrect-quadrant2") : "" }`}
-                onClick={(e) => handleQuadrantClick("small", "bottom", e)}><div className='quadrant-text' style={{ transform: `rotate(${-smallCircleRotation - 45}deg)` }}>{data.score4}</div></div>
+                <div className={`quadrant bottom-right ${smallSolved ? (data.scores.s4 === smallCircleAnswer ? "correct-quadrant2" : "incorrect-quadrant2") : "" }`}
+                onClick={(e) => handleQuadrantClick("small", "bottom", e)}><div className='quadrant-text' style={{ transform: `rotate(${-smallCircleRotation - 45}deg)` }}>{data && data.scores ? data.scores.s4 : ''}</div></div>
             </div>
 
             <div className={`circle2 big-circle ${selectedCircle === 'big' ? 'selected' : ''}`} style={{ transform: `translate(-50%, -50%) rotate(${bigCircleRotation + 45}deg)`, transition: `transform ${bigTransitionDuration} ease-in-out`}} onClick={() => handleCircleClick("big")}>
-                <div className={`quadrant top-left ${bigSolved ? (data.genre1 === bigCircleAnswer ? "correct-quadrant" : "incorrect-quadrant") : "" }`} 
+                <div className={`quadrant top-left ${bigSolved ? (data.genres.g1 === bigCircleAnswer ? "correct-quadrant" : "incorrect-quadrant") : "" }`} 
                 onClick={(e) => handleQuadrantClick("big", "top", e)}>
-                    <div className='quadrant-text' style={{ transform: `rotate(${offestRotation(bigCircleRotation)}deg)` }}>{data.genre1}</div>
+                    <div className='quadrant-text' style={{ transform: `rotate(${offestRotation(bigCircleRotation)}deg)` }}>{data && data.genres ? data.genres.g1 : ''}</div>
                 </div>
-                <div className={`quadrant top-right ${bigSolved ? (data.genre2 === bigCircleAnswer ? "correct-quadrant" : "incorrect-quadrant") : "" }`}
+                <div className={`quadrant top-right ${bigSolved ? (data.genres.g2 === bigCircleAnswer ? "correct-quadrant" : "incorrect-quadrant") : "" }`}
                     onClick={(e) => handleQuadrantClick("big", "right", e)}>
-                    <div className='quadrant-text' style={{ transform: `rotate(${offestRotation2(bigCircleRotation)}deg)` }}>{data.genre2}</div>
+                    <div className='quadrant-text' style={{ transform: `rotate(${offestRotation2(bigCircleRotation)}deg)` }}>{data && data.genres ? data.genres.g2 : ''}</div>
                 </div>
-                <div className={`quadrant bottom-left ${bigSolved ? (data.genre3 === bigCircleAnswer ? "correct-quadrant" : "incorrect-quadrant") : "" }`}
+                <div className={`quadrant bottom-left ${bigSolved ? (data.genres.g3 === bigCircleAnswer ? "correct-quadrant" : "incorrect-quadrant") : "" }`}
                     onClick={(e) => handleQuadrantClick("big", "left", e)}>
-                    <div className='quadrant-text' style={{ transform: `rotate(${offestRotation2(bigCircleRotation)}deg)` }}>{data.genre3}</div>
+                    <div className='quadrant-text' style={{ transform: `rotate(${offestRotation2(bigCircleRotation)}deg)` }}>{data && data.genres ? data.genres.g3 : ''}</div>
                 </div>
-                <div className={`quadrant bottom-right ${bigSolved ? (data.genre4 === bigCircleAnswer ? "correct-quadrant" : "incorrect-quadrant") : "" }`}
+                <div className={`quadrant bottom-right ${bigSolved ? (data.genres.g4 === bigCircleAnswer ? "correct-quadrant" : "incorrect-quadrant") : "" }`}
                     onClick={(e) => handleQuadrantClick("big", "bottom", e)}>
-                    <div className='quadrant-text' style={{ transform: `rotate(${offestRotation(bigCircleRotation)}deg)` }}>{data.genre4}</div>
+                    <div className='quadrant-text' style={{ transform: `rotate(${offestRotation(bigCircleRotation)}deg)` }}>{data && data.genres ? data.genres.g4 : ''}</div>
                 </div>
             </div>
             <div className = "huge-circle-wrapper">
             <div className={`circle2 huge-circle ${selectedCircle === 'huge' ? 'selected' : ''}`} style={{ transform: `rotate(${hugeCircleRotation + 45}deg)`, transition: `transform ${hugeTransitionDuration} ease-in-out`}} onClick={() => handleCircleClick("huge")}>
             <div className={`quadrant top-left ${
                 hugeSolved
-                ? (data.sentence1 === hugeCircleAnswer ? "correct-quadrant" : "incorrect-quadrant")
+                ? (data.quotes.q1 === hugeCircleAnswer ? "correct-quadrant" : "incorrect-quadrant")
                 : ""
                 }`}
                 onClick={(e) => handleQuadrantClick("huge", "top", e)}>
-                <div className='quadrant-text' style={{ transform: `rotate(${offestRotation_h(hugeCircleRotation) + 180 * hugeRight[0]}deg)` }}>{data.sentence1}</div>
+                <div className='quadrant-text' style={{ transform: `rotate(${offestRotation_h(hugeCircleRotation) + 180 * hugeRight[0]}deg)` }}>{data && data.quotes ? data.quotes.q1 : ''}</div>
                 </div>
                 <div className={`quadrant top-right ${
                     hugeSolved
-                    ? (data.sentence2 === hugeCircleAnswer ? "correct-quadrant" : "incorrect-quadrant")
+                    ? (data.quotes.q2 === hugeCircleAnswer ? "correct-quadrant" : "incorrect-quadrant")
                     : ""
                 }`}
                     onClick={(e) => handleQuadrantClick("huge", "right", e)}>
-                    <div className='quadrant-text' style={{ transform: `rotate(${offestRotation2_h(hugeCircleRotation) + 180 * hugeRight[2]}deg)` }}>{data.sentence2}</div>
+                    <div className='quadrant-text' style={{ transform: `rotate(${offestRotation2_h(hugeCircleRotation) + 180 * hugeRight[2]}deg)` }}>{data && data.quotes ? data.quotes.q2 : ''}</div>
                 </div>
                 <div className={`quadrant bottom-left ${hugeSolved
-                ? (data.sentence3 === hugeCircleAnswer ? "correct-quadrant" : "incorrect-quadrant")
+                ? (data.quotes.q3 === hugeCircleAnswer ? "correct-quadrant" : "incorrect-quadrant")
                 : ""
                 }`} 
                 onClick={(e) => handleQuadrantClick("huge", "left", e)}>
-                    <div className='quadrant-text' style={{ transform: `rotate(${offestRotation2_h(hugeCircleRotation) + 180 * hugeRight[1]}deg)` }}>{data.sentence3}</div>
+                    <div className='quadrant-text' style={{ transform: `rotate(${offestRotation2_h(hugeCircleRotation) + 180 * hugeRight[1]}deg)` }}>{data && data.quotes ? data.quotes.q3 : ''}</div>
                 </div>
                 <div className={`quadrant bottom-right ${hugeSolved
-                ? (data.sentence4 === hugeCircleAnswer ? "correct-quadrant" : "incorrect-quadrant")
+                ? (data.quotes.q4  === hugeCircleAnswer ? "correct-quadrant" : "incorrect-quadrant")
                 : ""
                 }`} 
                 onClick={(e) => handleQuadrantClick("huge", "bottom", e)}>
-                    <div className='quadrant-text' style={{ transform: `rotate(${offestRotation_h(hugeCircleRotation) + 180 * hugeRight[3]}deg)` }}>{data.sentence4}</div>
+                    <div className='quadrant-text' style={{ transform: `rotate(${offestRotation_h(hugeCircleRotation) + 180 * hugeRight[3]}deg)` }}>{data && data.quotes ? data.quotes.q4 : ''}</div>
                 </div>
             </div>
             </div>
@@ -559,9 +608,9 @@ const Circle2 = () => {
             <Meter value = {lives/4}/>
             </div>
             <div className='buttons-container'> 
-                <div className='button-housing'><button className = "play-button" onClick={handleRotateClick}>New <br></br> Puzzle</button></div>    
+                <div className='button-housing'><button className = "play-button" onClick={handleRotateClick}>Next <br></br> Puzzle</button></div>    
                 
-                <div className='button-housing'><button className = "play-button"  onClick={checkAnswers}>Check <br></br>Answer</button></div>
+                <div className='button-housing'><button className = "play-button"  onClick={checkAnswers}>Check<br></br>Answer</button></div>
             
             </div>
             </div>
@@ -590,6 +639,18 @@ const Circle2 = () => {
             <VictoryModal
                     isVisible={hasWon}
                     onClose={() => setHasWon(false)}
+                    onPlayAgain={reset_game}
+                    scores =  { wholeJSON.easy ?{
+                        easy: { title: wholeJSON.easy.correct_title, author: wholeJSON.easy.correct_artist, date: "Date", score: wholeJSON.easy.correct_score },
+                        medium: { title: wholeJSON.medium.correct_title, author: wholeJSON.medium.correct_artist, date: "Date", score:wholeJSON.medium.correct_score },
+                        hard: { title: wholeJSON.hard.correct_title, author: wholeJSON.hard.correct_artist, date: "Date", score: wholeJSON.hard.correct_score }} : null
+                    }
+                    links={ wholeJSON.easy ? {
+                        easy: wholeJSON.easy.link,
+                        medium: wholeJSON.medium.link,
+                        hard: wholeJSON.hard.link
+                    } : null}
+                    numToShow={numRounds}
                     width="400px"
                     height="300px"
             />

@@ -44,32 +44,6 @@ const Arm = ({ value, data, lives, onSelect, fin, rounds }) => {
         <div className="big-shadow"></div>
         <div className="rect-shadow"></div>
         <div className="arm-part">
-          {fin && (
-            <div className="WHy">
-          <button 
-            className="questions-button" 
-            onClick={() => onSelect(1)}
-            onMouseEnter={() => handleButtonHover(1)}
-          >
-            {data.option1}
-          </button>
-          <button 
-            className="questions-button" 
-            onClick={() => onSelect(2)}
-            onMouseEnter={() => handleButtonHover(2)}
-          >
-            {data.option2}
-          </button>
-          <button 
-            className="questions-button" 
-            onClick={() => onSelect(3)}
-            onMouseEnter={() => handleButtonHover(3)}
-          >
-            {data.option3}
-          </button>
-          <div className="arm-shine" ref={armShineRef}></div>
-          </div>
-          )}
         </div>
         <div className="bend-part"></div>
         <div className="bend-shadow"></div>
