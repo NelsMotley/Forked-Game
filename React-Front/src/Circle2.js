@@ -42,6 +42,7 @@ const Circle2 = () => {
     const [numRounds, setNumRounds] = useState(0);
     const [wholeJSON, setWholeJSON] = useState([])
     const [hasWon, setHasWon] = useState(false);
+    const API_URL = process.env.REACT_APP_API_URL || 'https://forked-game-production.up.railway.app/api/review';
 
     const DEFAULT_OFFSET = 45;
 
@@ -113,7 +114,7 @@ const Circle2 = () => {
       };
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/review')
+        axios.get(API_URL)
             .then(response => {
                 console.log(response.data);
                 setData(response.data.easy);
@@ -131,7 +132,7 @@ const Circle2 = () => {
     }, []);
 
     const reset_game = () => {
-        axios.get('http://localhost:5000/api/review')
+        axios.get(API_URL)
             .then(response => {
                 console.log(response.data);
                 setData(response.data.easy);
