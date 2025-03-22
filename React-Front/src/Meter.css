@@ -65,22 +65,7 @@
 }
 
 
-.arc {
-    --a: 61deg; /* control the progression */
-    width: 133%;
-    transform: rotate(-30deg);
-    background: #070707;
-    position:absolute;
-    bottom: -375%;
-    left: -16.5%;
-    aspect-ratio: 1;
-    padding: 2px; /* the boder thickness */
-    box-sizing: border-box;
-    border-radius: 50%;
-    mask:
-        linear-gradient(#0000 0 0) content-box intersect,
-        conic-gradient(#000 var(--a),#0000 0);
-  }
+
 
 
 .meter-label {
@@ -104,26 +89,7 @@
 }
 
 
-@keyframes needleWobble {
-    0% {
-      transform: rotate(var(--final-angle));
-    }
-    20% {
-      transform: rotate(calc(var(--final-angle) + 2deg));
-    }
-    40% {
-      transform: rotate(calc(var(--final-angle) - 1deg));
-    }
-    60% {
-      transform: rotate(calc(var(--final-angle) + 1deg));
-    }
-    80% {
-      transform: rotate(calc(var(--final-angle) - 0.5deg));
-    }
-    100% {
-      transform: rotate(var(--final-angle));
-    }
-  }
+
   
   .meter-needle.wobble {
     animation: needleWobble 0.8s ease-out;

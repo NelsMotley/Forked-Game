@@ -1,0 +1,64 @@
+.arc {
+    --a: 61deg; /* control the progression */
+    width: 133%;
+    transform: rotate(-30deg);
+    background: #070707;
+    position:absolute;
+    bottom: -375%;
+    left: -16.5%;
+    aspect-ratio: 1;
+    padding: 2px; /* the boder thickness */
+    box-sizing: border-box;
+    border-radius: 50%;
+    mask:
+        linear-gradient(#0000 0 0) content-box intersect,
+        conic-gradient(#000 var(--a),#0000 0);
+  }
+
+  @keyframes needleWobble {
+    0% {
+      transform: rotate(var(--final-angle));
+    }
+    20% {
+      transform: rotate(calc(var(--final-angle) + 2deg));
+    }
+    40% {
+      transform: rotate(calc(var(--final-angle) - 1deg));
+    }
+    60% {
+      transform: rotate(calc(var(--final-angle) + 1deg));
+    }
+    80% {
+      transform: rotate(calc(var(--final-angle) - 0.5deg));
+    }
+    100% {
+      transform: rotate(var(--final-angle));
+    }
+  }
+
+  .inverse-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9;
+    background: conic-gradient(
+      from 270deg,
+      rgba(0, 0, 0, 0.2) 0deg,
+      rgba(0, 0, 0, 0.2) 46.4deg,
+      transparent 45.05deg,
+      transparent 135deg,
+      rgba(0, 0, 0, 0.2) 135.05deg,
+      rgba(0, 0, 0, 0.2) 360deg
+    );
+    user-select: none;
+    -webkit-user-select: none;
+    /* Force hardware acceleration */
+    transform: translateZ(0);
+    will-change: transform, background;
+    /* Adding a tiny transparent border can hide edge artifacts */
+    border: 1px solid transparent;
+  }
