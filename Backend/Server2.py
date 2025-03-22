@@ -408,6 +408,17 @@ CORS(app)
 def index():
     return 'Hello, World!'
 
+@app.route('/check-db')
+def check_db():
+    db_path = os.environ.get('DATABASE_PATH', 'PitchforkData/database.sqlite')
+    result = {
+        "db_path": db_path,
+        "file_exists": os.path.exists(db_path),
+        "directory_contents": os.listdir(os.path.dirname(db_path) if '/' in db_path else '.'),
+        "working_directory": os.getcwd()
+    }
+    return jsonify(result)
+
 @app.route('/api/review', methods=['GET'])
 def get_review():
      try:
