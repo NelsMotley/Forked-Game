@@ -1,0 +1,160 @@
+.arc {
+    --a: 61deg; /* control the progression */
+    width: 133%;
+    transform: rotate(-30deg);
+    background: #070707;
+    position:absolute;
+    bottom: -375%;
+    left: -16.5%;
+    aspect-ratio: 1;
+    padding: 2px; /* the boder thickness */
+    box-sizing: border-box;
+    border-radius: 50%;
+    mask:
+        linear-gradient(#0000 0 0) content-box intersect,
+        conic-gradient(#000 var(--a),#0000 0);
+  }
+
+  @keyframes needleWobble {
+    0% {
+      transform: rotate(var(--final-angle));
+    }
+    20% {
+      transform: rotate(calc(var(--final-angle) + 2deg));
+    }
+    40% {
+      transform: rotate(calc(var(--final-angle) - 1deg));
+    }
+    60% {
+      transform: rotate(calc(var(--final-angle) + 1deg));
+    }
+    80% {
+      transform: rotate(calc(var(--final-angle) - 0.5deg));
+    }
+    100% {
+      transform: rotate(var(--final-angle));
+    }
+  }
+
+  .inverse-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9;
+    background: conic-gradient(
+      from 270deg,
+      rgba(0, 0, 0, 0.2) 0deg,
+      rgba(0, 0, 0, 0.2) 46.4deg,
+      transparent 45.05deg,
+      transparent 135deg,
+      rgba(0, 0, 0, 0.2) 135.05deg,
+      rgba(0, 0, 0, 0.2) 360deg
+    );
+    user-select: none;
+    -webkit-user-select: none;
+    /* Force hardware acceleration */
+    transform: translateZ(0);
+    will-change: transform, background;
+    /* Adding a tiny transparent border can hide edge artifacts */
+    border: 1px solid transparent;
+  }
+
+  .question-label {
+    background: linear-gradient(120deg, #b8b8b8, #f0f0f0, #8a8a8a, #e0e0e0, #545454);
+    background-size: 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 5s linear infinite;
+    text-align: center;
+    font-family: "Orbitrn", serif;
+    font-optical-sizing: auto;
+    font-weight: 900; /* from 400 to 900, 900 being bold */
+    font-style: normal;
+    text-overflow: ellipsis;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.inner-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2vh; /* Increased for better detailing */
+    height: 2vh;
+    border-radius: 50%; /* Makes it a circle */
+    background: radial-gradient(circle, 
+        #e0e0e0 0%,   /* Bright center */
+        #a8a8a8 30%,  /* Mid-tone gray */
+        #5c5c5c 60%,  /* Darker edge */
+        #2e2e2e 100%  /* Outer shadow */
+    );
+    box-shadow: 
+        inset 3px 3px 5px rgba(255, 255, 255, 0.4),  /* Top-left highlight */
+        inset -3px -3px 5px rgba(0, 0, 0, 0.6), /* Bottom-right shadow */
+        0px 2px 4px rgba(0, 0, 0, 0.8); /* Outer drop shadow for depth */
+    border: 1px solid #888; /* Subtle metallic rim */
+    z-index: 10;
+  }
+
+  .logo {
+    position: relative;
+    height: 8vh;
+    width: 40%;
+    border: 5px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-image: linear-gradient(120deg, #b8b8b8, #f0f0f0, #8a8a8a, #e0e0e0, #545454) 1;
+    background-size: 200%;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6);
+    margin: 0 auto;
+  }
+
+  .stereo-sidebar {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 9vw;
+    height: 100vh;
+    color: #ddd;
+    padding: 20px 0;
+    
+    /* Apply the lighter metallic gradient */
+    border: 0.7vmin solid #888;
+    background: linear-gradient(145deg, #444, #bbb);
+    box-shadow: 
+      inset 2px 2px 5px rgba(0,0,0,0.6),
+      3px 0 10px rgba(0, 0, 0, 0.5),
+      5px 0 15px rgba(0, 0, 0, 0.3);
+    
+    /* Retain the existing structure */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+  }
+
+  .big-background{
+    position: fixed;
+    top: 13 vh;
+    margin: auto;
+    width: 75%;
+    height: 90vh;
+    background: url('./test-wood2.jpg')no-repeat center center;
+    background-size: cover;
+    background-color: #1a1717;
+    border: 2px solid black;
+    border-radius: 10px; 
+    filter : drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.5))
+              drop-shadow(-10px 10px 10px rgba(0, 0, 0, 0.5))
+              drop-shadow(-10px 10px 15px rgba(0, 0, 0, 0.3));
+        
+    z-index: -2;
+  }
+  

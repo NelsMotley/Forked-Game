@@ -7,8 +7,8 @@
     "cra-template": "1.2.0",
     "jquery": "^3.7.1",
     "motion": "^12.4.7",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-fittext": "^1.0.0",
     "react-scripts": "5.0.1",
     "react-textfit": "^1.1.1",
@@ -18,7 +18,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "vercel-build": "DISABLE_ESLINT_PLUGIN=true GENERATE_SOURCEMAP=false npm install --legacy-peer-deps && CI=false npm run build"
   },
   "eslintConfig": {
     "extends": [
@@ -38,4 +39,5 @@
       "last 1 safari version"
     ]
   }
+ 
 }

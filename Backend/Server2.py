@@ -7,7 +7,21 @@ import threading
 import time
 import string
 import os
+import nltk
 
+nltk_data_dir = os.path.join(os.getcwd(), "nltk_data")
+os.makedirs(nltk_data_dir, exist_ok=True)
+nltk.data.path.append(nltk_data_dir)
+
+try:
+    nltk.download('punkt', download_dir=nltk_data_dir)
+except:
+    pass
+
+try:
+    nltk.download('punkt_tab', download_dir=nltk_data_dir)  
+except:
+    pass
 
 question_bank_lock = threading.Lock()
 question_bank = []
@@ -75,19 +89,36 @@ class Album:
         return self._quote
     
     def _extract_quote(self):
-        """Extract a quote from the content (first sentence less than 70 chars)"""
-        import re
-        
+        """Extract a quote from the content (first sentence less than 250 chars)"""
         if not self._content:
             return None
-            
-        sentences = re.split(r'(?<=[.!?])\s+', self._content)
         
-        for sentence in sentences:
-            if len(sentence) < 250:
-                return sentence
+        try:
+            from nltk.tokenize import sent_tokenize
             
-        return None
+            # Use NLTK's sentence tokenizer
+            sentences = sent_tokenize(self._content)
+            
+            for sentence in sentences:
+                sentence = sentence.strip()
+                if len(sentence) < 250 and sentence:
+                    return sentence
+            
+            return None
+            
+        except Exception as e:
+            print(f"NLTK error: {e}")
+            # Fallback to regex method
+            import re
+            sentence_pattern = r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?|!)\s'
+            sentences = re.split(sentence_pattern, self._content)
+            
+            for sentence in sentences:
+                sentence = sentence.strip()
+                if len(sentence) < 250 and sentence:
+                    return sentence
+            
+            return None
     
 
 class Question:
