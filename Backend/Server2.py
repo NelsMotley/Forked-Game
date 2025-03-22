@@ -400,6 +400,12 @@ def start_up():
         print(f"Error in start_up: {str(e)}")
         raise
 
+
+print("Initializing database...")
+start_up()
+fill_bank(50)
+print(f"Question bank initialized with {len(question_bank)} questions")
+
 ''' Server CODE'''
 app = Flask(__name__)
 CORS(app)
@@ -418,6 +424,15 @@ def check_db():
         "working_directory": os.getcwd()
     }
     return jsonify(result)
+
+@app.route('/check-bank')
+def check_bank():
+    return jsonify({
+        "question_bank_size": len(question_bank),
+        "easy_count": len(easy),
+        "medium_count": len(medium),
+        "hard_count": len(hard)
+    })
 
 @app.route('/api/review', methods=['GET'])
 def get_review():
