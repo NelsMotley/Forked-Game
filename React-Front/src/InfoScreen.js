@@ -112,7 +112,7 @@ const GuideModal = ({
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         display: 'flex',
         alignItems: 'center',
-        marginLeft: '9.2vw',
+        marginLeft: '9.6vw',
         justifyContent: 'center', 
         zIndex: 99999
       }}
@@ -127,7 +127,7 @@ const GuideModal = ({
           boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
           display: 'flex',
           flexDirection: 'column',
-          marginRight:'9.2vw',
+          marginRight:'9.6vw',
           padding: '20px',
           border: '2px solid black'
         }}
