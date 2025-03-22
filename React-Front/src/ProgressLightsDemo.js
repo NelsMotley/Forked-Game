@@ -9,19 +9,22 @@ const ProgressLights = ({ progress = 0, percentage = 0 }) => {
   const displayPercentage = Math.max(0, Math.min(100, percentage));
   
   return (
-    <div className="flex flex-col w-full" style={{
-      maxWidth: '140px',
+    <div className="flex flex-col w-full h-full" style={{
+      maxWidth: '100%',
+      height: "100%",
+      display: 'flex',
+    flexDirection: 'column',
       background: '#222',
-      border: '3px solid #333',
+      border: '0.3vmin solid #333',
       borderRadius: '3px',
       padding: '3px',
-      boxShadow: 'inset 1px 1px 2px rgba(0,0,0,0.8), 0 1px 1px rgba(255,255,255,0.1)'
+      
     }}>
       {/* Label */}
       <div style={{
         background: '#111',
         color: '#888',
-        fontSize: '12px',
+        fontSize: '1.1vmin',
         fontWeight: 'bold',
         textAlign: 'center',
         padding: '2px 0',
@@ -37,13 +40,13 @@ const ProgressLights = ({ progress = 0, percentage = 0 }) => {
         background: '#111',
         border: '1px solid #333',
         margin: '3px 0',
-        padding: '4px',
+        padding: '0.5vmin',
         display: 'flex',
         justifyContent: 'center'
       }}>
         <div style={{
           fontFamily: '"Orbitron", monospace',
-          fontSize: '16px',
+          fontSize: '1.6vmin',
           color: '#ffd700',
           textShadow: '0 0 10px rgba(255, 215, 0, 0.9)',
           letterSpacing: '1px'
@@ -53,7 +56,14 @@ const ProgressLights = ({ progress = 0, percentage = 0 }) => {
       </div>
       
       {/* Lights Container */}
-      <div className="flex flex-col gap-4 my-3 px-2">
+      <div className="flex flex-col gap-4 my-3 px-2 flex-grow" style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center', 
+        alignItems: 'center',     
+        height: '100%',
+        gap: '5%'  
+      }}>
         {[2, 1, 0].map((position) => (
           <IndicatorLight 
             key={position}
@@ -62,18 +72,7 @@ const ProgressLights = ({ progress = 0, percentage = 0 }) => {
         ))}
       </div>
       
-      {/* Custom Percentage Input */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '4px',
-        fontSize: '10px',
-        marginBottom: '4px',
-        marginTop: '2px'
-      }}>
-        
-      </div>
+     
     </div>
   );
 };
@@ -82,7 +81,7 @@ const IndicatorLight = ({ isActive }) => {
   return (
     <div style={{
       width: '100%',
-      height: '20px',
+      height: '1.5vmin',
       position: 'relative',
       background: '#222',
       border: '2px solid #333',
@@ -144,7 +143,7 @@ const IndicatorLight = ({ isActive }) => {
   );
 };
 
-// Demo with functional controls that matches your screenshot
+
 const ProgressLightsDemo = ({ correct = 0 }) => {
   const [progress, setProgress] = useState(0);
   const [percentage, setPercentage] = useState(0);

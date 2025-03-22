@@ -28,13 +28,13 @@ body {
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
-  width: 150px;
+  width: 9vw;
   height: 100vh;
   color: #ddd;
   padding: 20px 0;
   
   /* Apply the lighter metallic gradient */
-  border: 4px solid #888;
+  border: 0.7vmin solid #888;
   background: linear-gradient(145deg, #444, #bbb);
   box-shadow: 
     inset 2px 2px 5px rgba(0,0,0,0.6),
@@ -52,8 +52,10 @@ body {
 
 
 .brand-name {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
   text-align: center;
-  font-size: 26px;
+  font-size: calc(14px + 0.5vw);
   margin-bottom: 40px;
   font-weight: bold;
   color: #ffffff;
@@ -62,6 +64,13 @@ body {
   padding: 10%;
   font-family: "Orbitron", serif;
 }
+
+@media (max-width: 1000px) {
+  .brand-name {
+    font-size: 10px;
+  }
+}
+
 
 .menu-buttons {
   width: 90%;
@@ -72,7 +81,7 @@ body {
 
 .stereo-button {
   position: relative;
-  height: 70px;
+  height: 7vh;
   width: 99%;
   
   overflow: hidden;
@@ -154,14 +163,14 @@ body {
 .button-icon {
   width: 40px;
   height: 40px;
-  margin-left: 10px;
+  margin-left: 1vw;
   border-radius: 50%;
   background: #222;
   display: flex;
   justify-content: center;
   align-items: center;
   /* Inset styling for icon housing */
-  box-shadow: 
+  box-shadow:
     inset 0 1px 3px rgba(0, 0, 0, 0.8),
     0 1px 1px rgba(255, 255, 255, 0.1);
 }
@@ -237,8 +246,21 @@ body {
   letter-spacing: 1px;
   text-transform: uppercase;
   font-size: 14px;
-  color: #050505; /* Gold color for text */
+  color: #050505;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
+}
+
+/* Media query for mobile devices */
+@media (max-width: 1081px) {
+  .button-icon {
+    display: none; /* Hide the icon container on mobile */
+  }
+  
+  .button-text {
+    padding-left: 0; /* Remove left padding when icon is hidden */
+    text-align: center; /* Center the text on mobile */
+    width: 100%; /* Ensure the text takes up the full width of its container */
+  }
 }
 
 .stereo-sidebar .button-text {
@@ -470,8 +492,8 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 20px; /* Increased for better detailing */
-  height: 20px;
+  width: 2vh; /* Increased for better detailing */
+  height: 2vh;
   border-radius: 50%; /* Makes it a circle */
   background: radial-gradient(circle, 
       #e0e0e0 0%,   /* Bright center */
@@ -515,7 +537,12 @@ body {
 }
 
 .small-circle .quadrant-text{
+  font-size: 1.2vmax;
   color: #333333;
+}
+
+.huge-circle .quadrant-text{
+  font-size: 0.85vmax;
 }
 
 
@@ -524,7 +551,7 @@ body {
     transform-origin: center;
     transition: transform 0.5s ease-in-out;
     pointer-events: none;
-    font-size: 1.5vmin;
+    font-size: 1vmax;
     font-weight: bold;
     color: #cccccc;
     writing-mode: vertical-rl;

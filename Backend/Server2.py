@@ -6,6 +6,7 @@ from flask_cors import CORS
 import threading
 import time
 import string
+import os
 
 
 question_bank_lock = threading.Lock()
@@ -359,13 +360,17 @@ def fill_bank(n):
         hard_question = questions[2]
         hard_stuff = build_puzzle(question=hard_question, correct_score=hard_question.correct_album.get_score(), correct_genre=hard_question.correct_album.get_genre())
         puzzle = Puzzle(easy=easy_question, easy_scores=easy_stuff[0], easy_genres=easy_stuff[1], medium=medium_question, medium_scores=medium_stuff[0], medium_genres=medium_stuff[1], hard=hard_question, hard_scores=hard_stuff[0], hard_genres=hard_stuff[1])
-        question_bank.append(puzzle)
+        with question_bank_lock:
+            question_bank.append(puzzle)
         i += 1
+
+def capitalize_words(text):
+    return ' '.join(word.capitalize() for word in text.split())
 
 
 
 def start_up():
-    conn = sqlite3.connect('PitchforkData/database.sqlite')
+    conn = sqlite3.connect(os.environ.get('DATABASE_PATH', 'PitchforkData/database.sqlite'))
     cursor = conn.cursor()
 
     query = '''
@@ -396,121 +401,132 @@ def index():
 
 @app.route('/api/review', methods=['GET'])
 def get_review():
-    print("Getting review")
-    
-    global question_bank
-    print("Checking question bank", len(question_bank))
-    
-    selected = None
-    with question_bank_lock:
-        if len(question_bank) == 0:
-            return jsonify({'error': 'No questions available.'})
-        selected = question_bank.pop()
+     try:
+        print("Getting review")
+        
+        global question_bank
+        print("Checking question bank", len(question_bank))
 
-    easy_question = selected.get_easy()
-    easy_scores = selected.get_easy_scores()
-    easy_genres = selected.get_easy_genres()
-    easy_quotes = generate_quotes(easy_question)
-    easy_link = easy_question.correct_album.get_link()
+        
+        selected = None
+        with question_bank_lock:
+            if len(question_bank) == 0:
+                return jsonify({'error': 'No questions available.'})
+            selected = question_bank.pop()
 
-    medium_question = selected.get_medium()
-    medium_scores = selected.get_medium_scores()
-    medium_genres = selected.get_medium_genres()
-    medium_quotes = generate_quotes(medium_question)
-    medium_link = medium_question.correct_album.get_link()
+        easy_question = selected.get_easy()
+        easy_scores = selected.get_easy_scores()
+        easy_genres = selected.get_easy_genres()
+        easy_quotes = generate_quotes(easy_question)
+        easy_link = easy_question.correct_album.get_link()
 
-    hard_question = selected.get_hard()
-    hard_scores = selected.get_hard_scores()
-    hard_genres = selected.get_hard_genres()
-    hard_quotes = generate_quotes(hard_question)
-    hard_link = hard_question.correct_album.get_link()
+        medium_question = selected.get_medium()
+        medium_scores = selected.get_medium_scores()
+        medium_genres = selected.get_medium_genres()
+        medium_quotes = generate_quotes(medium_question)
+        medium_link = medium_question.correct_album.get_link()
 
-    
-    questions_data = {
-        "easy": {
-            "title": "Easy",
-            "correct_title": easy_question.correct_album.get_title(),
-            "correct_artist": easy_question.correct_album.get_artist(),
-            "correct_genre": easy_question.correct_album.get_genre(),
-            "correct_quote": easy_question.correct_album.get_quote(),
-            "correct_score": easy_question.correct_album.get_score(),
-            "link": easy_link,
-            "scores": {
-                "s1": float(f'{easy_scores[0]:.1f}'),
-                "s2": float(f'{easy_scores[1]:.1f}'),
-                "s3": float(f'{easy_scores[2]:.1f}'),
-                "s4": float(f'{easy_scores[3]:.1f}')
+        hard_question = selected.get_hard()
+        hard_scores = selected.get_hard_scores()
+        hard_genres = selected.get_hard_genres()
+        hard_quotes = generate_quotes(hard_question)
+        hard_link = hard_question.correct_album.get_link()
+
+        
+        questions_data = {
+            "easy": {
+                "title": "Easy",
+                "correct_title": capitalize_words(easy_question.correct_album.get_title()),
+                "correct_artist": capitalize_words(easy_question.correct_album.get_artist()),
+                "correct_genre": easy_question.correct_album.get_genre(),
+                "correct_quote": easy_question.correct_album.get_quote(),
+                "correct_score": easy_question.correct_album.get_score(),
+                "link": easy_link,
+                "scores": {
+                    "s1": float(f'{easy_scores[0]:.1f}'),
+                    "s2": float(f'{easy_scores[1]:.1f}'),
+                    "s3": float(f'{easy_scores[2]:.1f}'),
+                    "s4": float(f'{easy_scores[3]:.1f}')
+                },
+                "genres":{
+                    "g1": easy_genres[0],
+                    "g2": easy_genres[1],
+                    "g3": easy_genres[2],
+                    "g4": easy_genres[3]
+                },
+                "quotes":{
+                    "q1": easy_quotes[0],
+                    "q2": easy_quotes[1],
+                    "q3": easy_quotes[2],
+                    "q4": easy_quotes[3]
+                }
             },
-            "genres":{
-                "g1": easy_genres[0],
-                "g2": easy_genres[1],
-                "g3": easy_genres[2],
-                "g4": easy_genres[3]
+            "medium":{
+                "title": "medium",
+                "correct_title": capitalize_words(medium_question.correct_album.get_title()),
+                "correct_artist": capitalize_words(medium_question.correct_album.get_artist()),
+                "correct_genre": medium_question.correct_album.get_genre(),
+                "correct_quote": medium_question.correct_album.get_quote(),
+                "correct_score": medium_question.correct_album.get_score(),
+                "link": medium_link,
+                "scores": {
+                    "s1": float(f'{medium_scores[0]:.1f}'),
+                    "s2": float(f'{medium_scores[1]:.1f}'),
+                    "s3": float(f'{medium_scores[2]:.1f}'),
+                    "s4": float(f'{medium_scores[3]:.1f}')
+                },
+                "genres":{
+                    "g1": medium_genres[0],
+                    "g2": medium_genres[1],
+                    "g3": medium_genres[2],
+                    "g4": medium_genres[3]
+                },
+                "quotes":{
+                    "q1": medium_quotes[0],
+                    "q2": medium_quotes[1],
+                    "q3": medium_quotes[2],
+                    "q4": medium_quotes[3]
+                }
             },
-            "quotes":{
-                "q1": easy_quotes[0],
-                "q2": easy_quotes[1],
-                "q3": easy_quotes[2],
-                "q4": easy_quotes[3]
+            "hard" : {
+                "title": "hard",
+                "correct_title": capitalize_words(hard_question.correct_album.get_title()),
+                "correct_artist": capitalize_words(hard_question.correct_album.get_artist()),
+                "correct_genre": hard_question.correct_album.get_genre(),
+                "correct_quote": hard_question.correct_album.get_quote(),
+                "correct_score": hard_question.correct_album.get_score(),
+                "link": hard_link,
+                "scores": {
+                    "s1": float(f'{hard_scores[0]:.1f}'),
+                    "s2": float(f'{hard_scores[1]:.1f}'),
+                    "s3": float(f'{hard_scores[2]:.1f}'),
+                    "s4": float(f'{hard_scores[3]:.1f}')
+                },
+                "genres":{
+                    "g1": hard_genres[0],
+                    "g2": hard_genres[1],
+                    "g3": hard_genres[2],
+                    "g4": hard_genres[3]
+                },
+                "quotes":{
+                    "q1": hard_quotes[0],
+                    "q2": hard_quotes[1],
+                    "q3": hard_quotes[2],
+                    "q4": hard_quotes[3]
+                }
             }
-        },
-        "medium":{
-            "title": "medium",
-            "correct_title": medium_question.correct_album.get_title(),
-            "correct_artist": medium_question.correct_album.get_artist(),
-            "correct_genre": medium_question.correct_album.get_genre(),
-            "correct_quote": medium_question.correct_album.get_quote(),
-            "correct_score": medium_question.correct_album.get_score(),
-            "link": medium_link,
-            "scores": {
-                "s1": float(f'{medium_scores[0]:.1f}'),
-                "s2": float(f'{medium_scores[1]:.1f}'),
-                "s3": float(f'{medium_scores[2]:.1f}'),
-                "s4": float(f'{medium_scores[3]:.1f}')
-            },
-            "genres":{
-                "g1": medium_genres[0],
-                "g2": medium_genres[1],
-                "g3": medium_genres[2],
-                "g4": medium_genres[3]
-            },
-            "quotes":{
-                "q1": medium_quotes[0],
-                "q2": medium_quotes[1],
-                "q3": medium_quotes[2],
-                "q4": medium_quotes[3]
-            }
-        },
-        "hard" : {
-            "title": "hard",
-            "correct_title": hard_question.correct_album.get_title(),
-            "correct_artist": hard_question.correct_album.get_artist(),
-            "correct_genre": hard_question.correct_album.get_genre(),
-            "correct_quote": hard_question.correct_album.get_quote(),
-            "correct_score": hard_question.correct_album.get_score(),
-            "link": hard_link,
-            "scores": {
-                "s1": float(f'{hard_scores[0]:.1f}'),
-                "s2": float(f'{hard_scores[1]:.1f}'),
-                "s3": float(f'{hard_scores[2]:.1f}'),
-                "s4": float(f'{hard_scores[3]:.1f}')
-            },
-            "genres":{
-                "g1": hard_genres[0],
-                "g2": hard_genres[1],
-                "g3": hard_genres[2],
-                "g4": hard_genres[3]
-            },
-            "quotes":{
-                "q1": hard_quotes[0],
-                "q2": hard_quotes[1],
-                "q3": hard_quotes[2],
-                "q4": hard_quotes[3]
-            }
+
         }
-
-    }
-    return jsonify(questions_data)
+        return jsonify(questions_data)
+     except Exception as e:
+        return jsonify({'error': str(e)}), 500
+     
+@app.after_request
+def after_request_func(response):
+    # Run the bank check/refill asynchronously after the request is completed
+    if len(question_bank) < 150:
+        threading.Thread(target=fill_bank, args=(0,), daemon=True).start()
+    return response
 
 def test():
     global question_bank
@@ -565,4 +581,4 @@ def test():
 if __name__ == '__main__':
     start_up()
     fill_bank(50)
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
