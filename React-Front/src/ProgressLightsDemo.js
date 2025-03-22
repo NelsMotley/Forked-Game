@@ -106,10 +106,10 @@ const IndicatorLight = ({ isActive }) => {
         }}
       />
       
-      {/* Multiple layers for realistic glow */}
+      
       {isActive && (
         <>
-          {/* Inner bright center */}
+          
           <div style={{
             position: 'absolute',
             inset: 0,
@@ -119,7 +119,7 @@ const IndicatorLight = ({ isActive }) => {
             pointerEvents: 'none'
           }}></div>
           
-          {/* Horizontal light flare */}
+         
           <div style={{
             position: 'absolute',
             inset: 0,
@@ -129,7 +129,7 @@ const IndicatorLight = ({ isActive }) => {
             pointerEvents: 'none'
           }}></div>
           
-          {/* Vertical glossy highlight */}
+          
           <div style={{
             position: 'absolute',
             inset: 0,
@@ -149,7 +149,7 @@ const ProgressLightsDemo = ({ correct = 0 }) => {
   const [percentage, setPercentage] = useState(0);
   const [customValue, setCustomValue] = useState("");
   
-  // Update progress based on buttons
+ 
   const updateProgress = (direction) => {
     if (direction === 'up') {
       const newProgress = Math.min(3, progress + 1);
@@ -162,7 +162,6 @@ const ProgressLightsDemo = ({ correct = 0 }) => {
     }
   };
   
-  // Handle custom percentage input
   const handleCustomChange = (e) => {
     setCustomValue(e.target.value);
   };
@@ -172,28 +171,25 @@ const ProgressLightsDemo = ({ correct = 0 }) => {
     const clampedValue = Math.max(0, Math.min(100, value));
     setPercentage(clampedValue);
     
-    // Update lights based on percentage
     if (clampedValue < 33) setProgress(0);
     else if (clampedValue < 66) setProgress(1);
     else if (clampedValue < 100) setProgress(2);
     else setProgress(3);
   };
   
-  // Apply custom value when Enter is pressed
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       applyCustomValue();
     }
   };
   
-  // Set initial demo value
+
   useEffect(() => {
-    // Convert number of correct answers to progress (0-3)
-    // Using a simple mapping where each correct answer = one light
+    
     const newProgress = Math.min(3, correct);
     setProgress(newProgress);
     
-    // Calculate percentage based on progress (out of 3 lights)
+ 
     setPercentage(Math.round((newProgress / 3) * 100));
   }, [correct]);
   

@@ -4,29 +4,24 @@ const OrientationDetector = () => {
   const [isPortrait, setIsPortrait] = useState(false);
 
   useEffect(() => {
-    // Function to check orientation
     const checkOrientation = () => {
       setIsPortrait(window.innerHeight > window.innerWidth);
     };
-
-    // Set initial orientation
     checkOrientation();
 
-    // Add event listener for orientation changes
+  
     window.addEventListener('resize', checkOrientation);
 
-    // Clean up
+  
     return () => {
       window.removeEventListener('resize', checkOrientation);
     };
   }, []);
 
-  // If not in portrait mode, don't render anything
   if (!isPortrait) {
     return null;
   }
 
-  // Styles for the overlay
   const overlayStyle = {
     position: 'fixed',
     top: 0,
