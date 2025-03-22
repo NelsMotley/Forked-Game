@@ -15,9 +15,7 @@ body {
   
 }
 
-.needs-safari-adjustment .brand-name{
-    font-size: 1px;
-}
+
 
 @media (max-width: 1000px) {
   body{
@@ -50,6 +48,10 @@ body {
   padding: 10%;
   
   font-family: "Orbitron", serif;
+}
+
+.needs-safari-adjustment .brand-name{
+  font-size: 1px;
 }
 
 @media (max-width: 1000px) {

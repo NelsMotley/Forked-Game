@@ -113,7 +113,7 @@ const Circle2 = () => {
         // Add further logic here for when a button is selected.
       };
 
-      function detectSafariMobileIssues() {
+    function detectSafariMobileIssues() {
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         
         const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -129,7 +129,7 @@ const Circle2 = () => {
         }
         
         return false;
-      }
+    };
 
     useEffect(() => {
         axios.get(API_URL)
