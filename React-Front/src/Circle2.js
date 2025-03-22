@@ -59,6 +59,8 @@ const Circle2 = () => {
           }
         };
         handleScreenSize();
+
+        detectSafariMobileIssues();
         
         
     }, []);
