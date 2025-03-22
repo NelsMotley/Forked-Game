@@ -113,6 +113,24 @@ const Circle2 = () => {
         // Add further logic here for when a button is selected.
       };
 
+      function detectSafariMobileIssues() {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        
+        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        
+        
+        const viewportHeight = window.innerHeight;
+        const screenHeight = window.screen.height;
+        
+        
+        if (isIOS && isSafari && (screenHeight - viewportHeight > 100)) {
+          document.body.classList.add('needs-safari-adjustment');
+          return true;
+        }
+        
+        return false;
+      }
+
     useEffect(() => {
         axios.get(API_URL)
             .then(response => {

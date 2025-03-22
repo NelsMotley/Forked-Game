@@ -12,8 +12,11 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     
-    
+  
+}
 
+.needs-safari-adjustment .test{
+  transform: scale(0.5);
 }
 
 @media (max-width: 1000px) {
