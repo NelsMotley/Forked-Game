@@ -11,9 +11,17 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    
+    
 
 }
 
+@media (max-width: 1000px) {
+  body{
+    margin-top: -10px;
+  }
+  
+}
 
 
 
@@ -37,11 +45,13 @@ body {
   text-transform: uppercase;
   letter-spacing: 2px;
   padding: 10%;
+  
   font-family: "Orbitron", serif;
 }
 
 @media (max-width: 1000px) {
   .brand-name {
+    margin-top: 30px;
     font-size: 10px;
   }
 }
