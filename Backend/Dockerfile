@@ -7,4 +7,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD ["gunicorn", "server2:app"]
+CMD ["gunicorn", "Server2:app"]
