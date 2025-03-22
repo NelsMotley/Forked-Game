@@ -15,8 +15,8 @@ body {
   
 }
 
-.needs-safari-adjustment .test{
-  transform: scale(0.5);
+.needs-safari-adjustment .brand-name{
+    font-size: 1px;
 }
 
 @media (max-width: 1000px) {
