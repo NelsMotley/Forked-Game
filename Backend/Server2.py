@@ -370,26 +370,35 @@ def capitalize_words(text):
 
 
 def start_up():
-    conn = sqlite3.connect(os.environ.get('DATABASE_PATH', 'PitchforkData/database.sqlite'))
-    cursor = conn.cursor()
-
-    query = '''
-        SELECT * FROM Merged_artist
-        JOIN reviews ON Merged_artist.reviewid = reviews.reviewid
-        JOIN genres ON Merged_artist.reviewid = genres.reviewid
-        JOIN content ON Merged_artist.reviewid = content.reviewid
+    db_path = os.environ.get('DATABASE_PATH', 'PitchforkData/database.sqlite')
+    print(f"Attempting to connect to database at: {db_path}")
+    
+    try:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
         
-    '''
-
-    cursor.execute(query)
-
-    results = cursor.fetchall()
-    split_difficulty(results)
-    print(len(easy))
-    print(len(hard))
-    print(len(medium))
-    fill_bank(0)
-    conn.close()
+        # Execute your query
+        query = '''
+            SELECT * FROM Merged_artist
+            JOIN reviews ON Merged_artist.reviewid = reviews.reviewid
+            JOIN genres ON Merged_artist.reviewid = genres.reviewid
+            JOIN content ON Merged_artist.reviewid = content.reviewid
+        '''
+        
+        cursor.execute(query)
+        results = cursor.fetchall()
+        print(f"Retrieved {len(results)} results from database")
+        
+        split_difficulty(results)
+        print(f"Easy: {len(easy)}, Medium: {len(medium)}, Hard: {len(hard)}")
+        
+        fill_bank(0)
+        print(f"Question bank filled with {len(question_bank)} questions")
+        
+        conn.close()
+    except Exception as e:
+        print(f"Error in start_up: {str(e)}")
+        raise
 
 ''' Server CODE'''
 app = Flask(__name__)
