@@ -3,33 +3,30 @@ import "./Arm.css";
 import ProgressLightsDemo from './ProgressLightsDemo.js';
 
 const Arm = ({ value, data, lives, onSelect, fin, rounds }) => {
-  // Create refs for elements we need to manipulate
   const armShineRef = useRef(null);
   const [isAnimating, setIsAnimating] = useState(false);
   
-  // Handle shine animation for a specific button
+  //Ignore this. Old code for a feature that didn't work.
   const handleButtonHover = (buttonIndex) => {
-    // Don't start a new animation if one is already running
+    
     if (isAnimating) return;
     
-    // Set flag to prevent multiple animations
+    
     setIsAnimating(true);
     
     const armShine = armShineRef.current;
     if (armShine) {
-      // Remove any existing animation classes
+      
       armShine.classList.remove('shine-btn1', 'shine-btn2', 'shine-btn3');
       
-      // Force browser to recognize the DOM change before adding new class
+      
       void armShine.offsetWidth;
       
-      // Add the appropriate class for this button
       armShine.classList.add(`shine-btn${buttonIndex}`);
       
-      // Reset the flag when animation completes
       setTimeout(() => {
         setIsAnimating(false);
-      }, 700); // Match to your animation duration
+      }, 700);
     }
   };
   

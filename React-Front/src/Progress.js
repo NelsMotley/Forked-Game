@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-
+//NOT USED IGNORE
 const Progress = ({
     progress = 45,
     maxValue = 90,

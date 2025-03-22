@@ -54,7 +54,7 @@ const Circle2 = () => {
     useEffect(() => {
         // Check screen width when component mounts
         const handleScreenSize = () => {
-          if (window.innerWidth < 800) {
+          if (window.innerWidth < 1600) {
             setWin(-10);
           }
         };
@@ -66,7 +66,7 @@ const Circle2 = () => {
    
 
     const handleScreenSize = () => {
-        if (window.innerWidth < 800) {
+        if (window.innerWidth < 1600) {
           setWin(-10);
         }
       };
@@ -188,7 +188,6 @@ const Circle2 = () => {
     }
 
     const handleQuadrantClick = (circleType, quadrantName, e) => {
-        // Prevent the click from bubbling to parent elements (if needed)
         e.stopPropagation();
         console.log(`Clicked ${quadrantName} quadrant of ${circleType} circle`);
         let targetRotation;
@@ -299,7 +298,6 @@ const Circle2 = () => {
                 return prev + shortestRotation;
             });
         }
-        // Perform any other logic here
       };
 
       const handleRotateClick = () => {
@@ -485,6 +483,22 @@ const Circle2 = () => {
         }
     };
 
+    const [textWidth, setTextWidth] = useState('90%');
+
+    useEffect(() => {
+        if (data && data.correct_artist) {
+            if (data.correct_artist.length <= 4) {
+              setTextWidth("50%");
+            } else {
+              setTextWidth("90%");
+            }
+          } else {
+            setTextWidth("90%");
+          }
+      }, [data.correct_artist]);
+
+
+
     return (
         <div>
 
@@ -533,7 +547,7 @@ const Circle2 = () => {
             <div className='logo-wrapper'>
                 <div className='logo-container'>
                     <div className='logo'>
-                        <Textfit mode="single" forceSingleModeWidth={true} max={60} style={{ width: '90%', height: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Textfit mode="single" forceSingleModeWidth={true} max={60} style={{ width: textWidth, height: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <h2 className="question-label">{data ? data.correct_artist : ''}</h2>
                         </Textfit>
                     </div>
@@ -646,7 +660,7 @@ const Circle2 = () => {
             </div>
 
 
-            {/* New row of option buttons */}
+            
             { (bigSolved && smallSolved && hugeSolved) && (
                 <div className="option-buttons">
                 

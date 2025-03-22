@@ -40,8 +40,6 @@ const Meter = ({value}) => {
         const tickFraction = index / (totalTicks - 1);
         const tickAngle = -30 + tickFraction * 60;
         
-        // For a rectangular meter, use a calculation based on both width and height
-        // We'll use the width for horizontal positioning and a factor of height for the radius
         const radius = dimensions.width * 0.6;
         const x = radius * Math.cos(tickAngle * Math.PI / 180);
         const y = radius * Math.sin(tickAngle * Math.PI / 180);
