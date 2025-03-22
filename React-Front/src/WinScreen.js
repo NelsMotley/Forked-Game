@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './Winscreen.css'
 
 const VictoryModal = ({
   isVisible = true,
@@ -36,9 +37,13 @@ const VictoryModal = ({
 
   // Create portal to render at root level
   return ReactDOM.createPortal(
-    <div
+    <div className='overlay'
       style={{
+        marginTop: '0',
+        paddingTop: '10px',
         position: 'fixed',
+        overflowY: "auto",
+          WebkitOverflowScrolling: "touch",
         top: 0,
         left: 0,
         right: 0,
@@ -47,7 +52,6 @@ const VictoryModal = ({
         height: '100%',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         display: 'flex',
-        alignItems: 'center',
         justifyContent: 'center',
         zIndex: 99999
       }}
@@ -56,7 +60,10 @@ const VictoryModal = ({
       {/* Main container */}
       <div
         style={{
-          width: '500px',
+          marginTop: '0',
+          paddingTop: '10px',
+          
+          width: '30vw',
           backgroundColor: 'white',
           borderRadius: '8px',
           boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
@@ -77,7 +84,7 @@ const VictoryModal = ({
           }}
         >
           <h1 style={{ 
-            fontSize: '32px',
+            fontSize: '3.3vmin',
             fontWeight: 'bold',
             fontFamily: "Times New Roman",
             margin: 0
@@ -148,7 +155,7 @@ const VictoryModal = ({
               backgroundColor: 'white',
               color: 'black',
               border: '2px solid black',
-              fontSize: '28px',
+              fontSize: '4.5vmin',
               fontStyle: "italic",
               cursor: 'pointer',
               width: '60%',
@@ -189,7 +196,12 @@ const DifficultySection = ({ label, title, author, date, score, link }) => {
         cursor: 'pointer', // Change cursor to pointer to indicate clickable
         transition: 'background-color 0.2s ease', // Smooth transition for hover effect
         backgroundColor: 'white', // Default background color
-        position: 'relative' // Position relative for pseudo-element
+        position: 'relative', // Position relative for pseudo-element
+        '@media (max-width: 768px)': {
+          flexDirection: 'column', // Stack elements vertically on mobile
+          alignItems: 'flex-start', // Align items to the left
+          padding: '8px', // Slightly reduced padding
+        }
       }}
       onClick={handleClick}
       onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f5f5f5'} // Lighter background on hover
@@ -197,7 +209,7 @@ const DifficultySection = ({ label, title, author, date, score, link }) => {
     >
       <div style={{ flex: 1 }}>
         <h3 style={{ 
-          fontSize: '26px',
+          fontSize: 'clamp(18px, 1vw, 26px)',
           fontFamily: "Times New Roman",
           fontStyle: "italic",
           margin: '0 0 5px 0',
@@ -209,10 +221,10 @@ const DifficultySection = ({ label, title, author, date, score, link }) => {
           fontFamily: "arial",
           display: 'flex',
           justifyContent: 'space-between',
-          fontSize: '16px'
+          fontSize: 'clamp(12px, 1vw, 16px)' 
         }}>
           <span style={{ color: '#8B4513' }}>{author}</span>
-          <span style={{ color: '#8B4513' }}>{date}</span>
+          
         </div>
       </div>
       
@@ -226,10 +238,16 @@ const DifficultySection = ({ label, title, author, date, score, link }) => {
         alignItems: 'center',
         justifyContent: 'center',
         marginLeft: '20px',
+        '@media (max-width: 1081px)': {
+          width: '50px', // Slightly smaller on mobile
+          height: '50px',
+          marginLeft: '0', // Remove left margin
+          alignSelf: 'flex-end' // Position at the bottom right
+        }
       }}>
         <span style={{ 
           fontFamily: 'Montserrat',
-          fontSize: '26px', 
+          fontSize: 'clamp(16px, 1vw, 26px)',
           fontWeight: 'bold'
         }}>
           {formattedScore}
@@ -250,11 +268,11 @@ const QuestionMarkSection = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '80px' // Set a fixed height similar to DifficultySection
+        height: '8vmin' // Set a fixed height similar to DifficultySection
       }}
     >
       <span style={{ 
-        fontSize: '60px',
+        fontSize: '4.5vmax',
         fontWeight: 'bold',
         fontFamily: 'Times New Roman'
       }}>

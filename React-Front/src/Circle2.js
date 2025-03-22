@@ -8,6 +8,8 @@ import Arm from './Arm.js';
 import axios from 'axios';
 import ArmPortal from './ArmPortal.js';
 import VictoryModal from './WinScreen.js';
+import GuideModal from './InfoScreen.js';
+
 
 const Circle2 = () => {
     const [smallCircleRotation, setSmallCircleRotation] = useState(0);
@@ -335,7 +337,9 @@ const Circle2 = () => {
                     setHugeRight([0,0,1,0]);
                     setIsOdd(false);
                     setIsOdd2(true);
-                    setLives(4);
+                    if(lives < 4){
+                        setLives(lives+1)
+                    }
                     setScore(0.0);
                     setHugeSolved(false);
                     setBigSolved(false);
@@ -467,29 +471,54 @@ const Circle2 = () => {
         }
     };
 
+    const [activeButton, setActiveButton] = useState('home');
+    const [showInfo, setShowInfo] = useState(false);
+
+    const handleButtonClick = (buttonId) => {
+        setActiveButton(buttonId);
+        if(buttonId === "home"){
+            setShowInfo(false);
+        }
+        else{
+            setShowInfo(true);
+        }
+    };
+
     return (
         <div>
 
-                    
+            <GuideModal isVisible={showInfo} buttonId = {activeButton} onClose={() => {setShowInfo(false); setActiveButton('home');}}  />
             <div className='fake'>
             
             <div className='stereo-sidebar'>
                 <div className='brand-name'>Forkle</div>
+                
                     <div class="menu-buttons">
-                    <a href="#home" class="stereo-button active">
+                    
+                    <a href="#home" className={`stereo-button ${activeButton === 'home' ? 'active' : ''}`}
+                                                onClick={() => handleButtonClick('home')}>
                         <div class="button-icon icon-play"></div>
                         <div class="button-text">play</div>
                     </a>
-                    <a href="#services" class="stereo-button">
+                    <a href="#services" 
+                    className={`stereo-button ${activeButton === 'services' ? 'active' : ''}`}
+                    onClick={() => handleButtonClick('services')}
+                    >
                         <div class="button-icon icon-home"></div>
                         <div class="button-text">Guide</div>
                     </a>
-                    <a href="#about" class="stereo-button">
+                    <a href="#about" 
+                    className={`stereo-button ${activeButton === 'about' ? 'active' : ''}`}
+                    onClick={() => handleButtonClick('about')}
+                    >
                         <div class="button-icon icon-about"></div>
                         <div class="button-text">About</div>
                     </a>
                     
-                    <a href="#gallery" class="stereo-button">
+                    <a href="#gallery" 
+                    className={`stereo-button ${activeButton === 'gallery' ? 'active' : ''}`}
+                    onClick={() => handleButtonClick('gallery')}
+                    >
                         <div class="button-icon icon-gallery"></div>
                         <div class="button-text">Bug</div>
                     </a>
