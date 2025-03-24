@@ -9,7 +9,6 @@ This project uses React for the frontend and Flask for the backend API.
 - **Frontend**: React
 - **Backend**: Flask
 - **Database**: Sqlite database
-- **Authentication**: [Auth system if applicable]
 
 ## Prerequisites
 - Node.js (v22.13.0 or later) has not been tested with older versions
